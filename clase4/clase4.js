@@ -6,23 +6,24 @@ class Contenedor{
     }
 
     async save(obj){
-        try{
-            let listaProductos = JSON.parse(await fs.promises.readFile(this.rutaDeArchivo, 'utf-8'))
-            let ultimoId = Math.max(
-                ...listaProductos.map(producto => producto.id)
-            )
-            if (ultimoId === -Infinity){
-                obj.id = 1;
-            }
-            else{
-                obj.id = ultimoId + 1;
-            }
-            listaProductos.push(obj)
-            fs.promises.writeFile(this.rutaDeArchivo, JSON.stringify(listaProductos, null, 2))
-            console.log(`Producto guardado! Se le asignó el id N°${obj.id}`)
+        const objs = await this.getAll()
+        console.log(objs)
+
+        let newId
+        if (objs.length == 0) {
+          newId = 1
+        } else {
+          newId = objs[objs.length - 1].id + 1
         }
-        catch(err){
-            console.log(err)
+    
+        const newObj = { ...obj, id: newId }
+        objs.push(newObj)
+    
+        try {
+          await fs.promises.writeFile(this.rutaDeArchivo, JSON.stringify(objs, null, 2))
+          return newId
+        } catch (error) {
+          throw new Error(`Error al guardar: ${error}`)
         }
     }
 
@@ -41,8 +42,8 @@ class Contenedor{
 
         }
         catch(err){
-            console.log('Hubo un error al traer el producto :', err)
-            
+            throw new Error (`Error al traer el producto: ${err}`)
+
         }
     }
 
@@ -50,9 +51,10 @@ class Contenedor{
         try{
             let listaProductos = await fs.promises.readFile(this.rutaDeArchivo, 'utf-8')
             console.log(listaProductos)
+            return JSON.parse(listaProductos)
         }
         catch(err){
-            console.log('Error al leer los datos: ', err)
+            return []
         }
     }
 
@@ -66,7 +68,7 @@ class Contenedor{
             fs.promises.writeFile(this.rutaDeArchivo, JSON.stringify(productoEliminado, null, 2))
         }
         catch (err){
-            console.log('Hubo un error al eliminar id del producto: ', err)
+            throw new Error(`Hubo un error al eliminar id del producto: ${err}`)
         }
     }
 
@@ -76,14 +78,11 @@ class Contenedor{
             console.log('Se limpió la lista de productos')
         }
         catch(err){
-            console.log('Hubo un error: ', err)
+            throw new Error(`Hubo un error: ${err}`)
         }
     }
 }
 
-let producto1 = new Contenedor('./productos.txt')
-//producto1.save({titulo: 'Motherboard', precio: 300, foto: 'fotoMotherboard'});
-//producto1.getById(2);
-//producto1.getAll();
-//producto1.deleteById(1);
-//producto1.deleteAll()
+
+
+module.exports = Contenedor
