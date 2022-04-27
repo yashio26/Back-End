@@ -1,0 +1,20 @@
+[
+  {
+    "titulo": "Procesador",
+    "precio": 100,
+    "foto": "fotoProcesador",
+    "id": 1
+  },
+  {
+    "titulo": "RAM",
+    "precio": 200,
+    "foto": "fotoRam",
+    "id": 2
+  },
+  {
+    "titulo": "Motherboard",
+    "precio": 300,
+    "foto": "fotoMotherboard",
+    "id": 3
+  }
+]
