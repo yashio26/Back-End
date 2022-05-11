@@ -1,0 +1,2 @@
+Para mi proyecto, prefiero EJS. Al ser más popular, hay mucha más info/código que con los demás motores de plantillas. Además de que se me hizo simple codear,
+el formato en HTML me gusta, me siento cómodo.
