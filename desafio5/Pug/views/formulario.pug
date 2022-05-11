@@ -1,0 +1,17 @@
+extends index
+
+block formulario
+    h1='Ingrese datos'
+    br
+    form(action="/productos" method="post")
+        div
+            label.form-label(for='titulo') Titulo
+            input.form-control(type='text', name='titulo')
+        div 
+            label.form-label(for='precio') Precio
+            input.form-control(type='number', name='precio')
+        div
+            label.form-label(for='foto') Foto
+            input.form-control(type='text', name='foto')
+        button="Enviar"
+
