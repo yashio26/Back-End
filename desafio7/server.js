@@ -58,7 +58,6 @@ routerCarrito.delete('/:id', async (req, res) => {
 routerCarrito.get('/:id/productos', async (req, res) => {
     const id = parseInt(req.params.id)
     res.json(await productosEnCarrito.getById(id))
-    console.log('Hace el get de carrito')
 })
 
 routerCarrito.post('/:id/productos', async (req, res) => {

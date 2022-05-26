@@ -26,27 +26,6 @@ class ContenedorCarrito{
         }
     }
 
-    async saveProductoEnCarrito(numeroId){
-        const objs = await this.getAll()
-        console.log(objs)
-        let timestamp = Date.now()
-        let newId
-        if (objs.length == 0) {
-          newId = 1
-        } else {
-          newId = objs[objs.length - 1].id + 1
-        }
-        const newObj = {id: newId, timestamp: timestamp, productos: {}}
-        objs.push(newObj)
-        try{
-            await fs.promises.writeFile(this.rutaDeArchivo, JSON.stringify(objs, null, 2))
-            return newId
-        }
-        catch{
-            throw new Error(`Error al guardar carrito: ${error}`)
-        }
-    }
-
     async getProduct(numeroId){
         try{
             let carrito = JSON.parse(await fs.promises.readFile(this.rutaDeArchivo, 'utf-8'))
@@ -129,32 +108,6 @@ class ContenedorCarrito{
             throw new Error(`Hubo un error al eliminar id del producto: ${err}`)
         }
     }
-
-    async deleteAll(){
-        try{
-            await fs.promises.writeFile(this.rutaDeArchivo, JSON.stringify([]), null, 2)
-            console.log('Se limpió la lista de productos')
-        }
-        catch(err){
-            throw new Error(`Hubo un error: ${err}`)
-        }
-    }
-
-    async modifById(id, obj) {
-        const objs = await this.getAll();
-        objs.find((o) => o.id == id).titulo = obj.titulo;
-        objs.find((o) => o.id == id).precio = obj.precio;
-        objs.find((o) => o.id == id).foto = obj.foto;
-        try {
-          await fs.promises.writeFile(
-            this.rutaDeArchivo,
-            JSON.stringify(objs, null, 2)
-          );
-        } 
-        catch (error) {
-          throw new Error(`Error al modificar: ${error}`);
-        }
-      }
 }
 
 

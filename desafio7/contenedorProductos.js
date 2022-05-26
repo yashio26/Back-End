@@ -73,16 +73,6 @@ class ContenedorProductos{
         }
     }
 
-    async deleteAll(){
-        try{
-            await fs.promises.writeFile(this.rutaDeArchivo, JSON.stringify([]), null, 2)
-            console.log('Se limpió la lista de productos')
-        }
-        catch(err){
-            throw new Error(`Hubo un error: ${err}`)
-        }
-    }
-
     async modifById(id, obj) {
         const objs = await this.getAll();
         objs.find((o) => o.id == id).titulo = obj.titulo;
