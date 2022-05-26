@@ -1,0 +1,12 @@
+[
+  {
+    "nombre": "zarina",
+    "descripcion": "personaje",
+    "codigo": "21",
+    "foto": "",
+    "precio": "$100",
+    "stock": "20",
+    "id": 1,
+    "timestamp": 1653441350588
+  }
+]
