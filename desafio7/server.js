@@ -14,60 +14,79 @@ app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
-routerProductos.get('/:id?', async (req, res) => {
+let admin = true;
+const error = {
+    error: 401,
+    descripcion: 'No tienes permisos para hacer esta acción.'
+}
+
+routerProductos.get('/:id', async (req, res) => {
     const id = parseInt(req.params.id)
     res.json(await listaDeProductos.getById(id))
-    console.log('Hace el get de productos')
+})
+
+routerProductos.get('/', async (req, res) => {
+    res.json(await listaDeProductos.getAll())
 })
 
 routerProductos.post('/', async (req, res) => {
-    //FRONT-END
-    //const nuevoProducto = req.body
-    //res.json(await listaDeProductos.save(nuevoProducto))
-    res.json(await listaDeProductos.save({nombre: "zarina", descripcion: "personaje", codigo: "21", foto: "", precio: "$100", stock: "20"}))
+    const nuevoProducto = req.body
+    if (admin != true){
+        res.json(error)
+    }
+    else{
+        res.json(await listaDeProductos.save(nuevoProducto))
+    }
 })
 
-routerProductos.put("/:id", async (req, res) => {
+routerProductos.put('/:id', async (req, res) => {
     const { id } = req.params;
-    const productoMod = {};
-    productoMod.titulo = req.body.titulo;
-    productoMod.precio = req.body.precio;
-    productoMod.foto = req.body.foto;
-    await listaDeProductos.modifById(id, productoMod);
-    res.send("Producto Modificado");
+    const obj = req.body;
+    if (admin != true){
+        res.json(error)
+    }
+    else{
+    res.json(await listaDeProductos.modifById(id, obj))
+    }
   });
 
 routerProductos.delete('/:id', async (req, res) => {
     const id = parseInt(req.params.id)
+    if (admin != true){
+        res.json(error)
+    }
+    else{
     res.json(await listaDeProductos.deleteById(id))
+    }
 })
 
 //
 
 routerCarrito.post('/', async (req, res) => {
-    //const nuevoProducto = req.body
-    //res.json(await productosEnCarrito.save(nuevoProducto))
     res.json(await productosEnCarrito.saveCarrito())
 })
 
 routerCarrito.delete('/:id', async (req, res) => {
     const id = parseInt(req.params.id)
-    res.json(await productosEnCarrito.deleteByIdCarrito(id))
+    res.json(await productosEnCarrito.deleteCartById(id))
 })
 
 routerCarrito.get('/:id/productos', async (req, res) => {
     const id = parseInt(req.params.id)
-    res.json(await productosEnCarrito.getById(id))
+    res.json(await productosEnCarrito.getCartById(id))
 })
 
 routerCarrito.post('/:id/productos', async (req, res) => {
     const id = parseInt(req.params.id)
-    res.json(await productosEnCarrito.getProduct(id))
+    const productId = req.body.query
+    const productoParaAgregarACarrito = await productosEnCarrito.getProductById(productId)
+    res.json(await productosEnCarrito.saveProductInCart(id, JSON.stringify(productoParaAgregarACarrito, null, 2)))
 })
 
-routerCarrito.delete('/:id', async (req, res) => {
-    const id = parseInt(req.params.id)
-    res.json(await productosEnCarrito.deleteById(id))
+routerCarrito.delete('/:id/productos/:id_prod', async (req, res) => {
+    const idCarrito = parseInt(req.params.id)
+    const idProducto = parseInt(req.params.id_prod)
+    res.json(await productosEnCarrito.deleteProductInCartById(idCarrito, idProducto))
 })
 
 app.use('/api/productos', routerProductos)
@@ -75,7 +94,7 @@ app.use('/api/carrito', routerCarrito)
 
 
 
-const PORT = 8080
+const PORT = process.env.PORT || 8080;
 const server = app.listen(PORT, () => {
     console.log(`Servidor escuchando en el puerto ${server.address().port}`)
 })

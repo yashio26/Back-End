@@ -7,7 +7,6 @@ class ContenedorProductos{
 
     async save(obj){
         const objs = await this.getAll()
-        console.log(objs)
         let timestamp = Date.now()
         let newId
         if (objs.length == 0) {
@@ -15,7 +14,6 @@ class ContenedorProductos{
         } else {
           newId = objs[objs.length - 1].id + 1
         }
-        console.log(`el timestamp es : ${timestamp}`)
         const newObj = { ...obj, id: newId, timestamp: timestamp }
         objs.push(newObj)
     
@@ -34,10 +32,9 @@ class ContenedorProductos{
                 return producto.id === numeroId
             })
             if (productoEncontrado == (undefined || null)){
-                console.log('El producto no se encontró.');
+                return('El producto no se encontró.');
             }
             else{
-                console.log('El producto encontrado es: ', productoEncontrado);
                 return productoEncontrado;
             }
 
@@ -51,7 +48,6 @@ class ContenedorProductos{
     async getAll(){
         try{
             let listaProductos = await fs.promises.readFile(this.rutaDeArchivo, 'utf-8')
-            console.log(listaProductos)
             return JSON.parse(listaProductos)
         }
         catch(err){
@@ -65,8 +61,8 @@ class ContenedorProductos{
             let productoEliminado = listaProductos.filter((producto) => {
                 return producto.id !== numeroId
             })
-            console.log(productoEliminado);
             fs.promises.writeFile(this.rutaDeArchivo, JSON.stringify(productoEliminado, null, 2))
+            return('Se eliminó el producto.')
         }
         catch (err){
             throw new Error(`Hubo un error al eliminar id del producto: ${err}`)
@@ -74,15 +70,17 @@ class ContenedorProductos{
     }
 
     async modifById(id, obj) {
-        const objs = await this.getAll();
-        objs.find((o) => o.id == id).titulo = obj.titulo;
-        objs.find((o) => o.id == id).precio = obj.precio;
-        objs.find((o) => o.id == id).foto = obj.foto;
+        const listaDeProductos = await this.getAll();
+
+        const busquedaDeProducto = listaDeProductos.findIndex(o => {
+            return o.id === parseInt(id)
+        })
+        let timestamp = Date.now()
+        const productoActualizado = {...obj, timestamp: timestamp, id: parseInt(id)}
         try {
-          await fs.promises.writeFile(
-            this.rutaDeArchivo,
-            JSON.stringify(objs, null, 2)
-          );
+            listaDeProductos[busquedaDeProducto] = productoActualizado;
+            await fs.promises.writeFile(this.rutaDeArchivo, JSON.stringify(listaDeProductos, null, 2));
+            return ('El producto fue modificado.')
         } 
         catch (error) {
           throw new Error(`Error al modificar: ${error}`);
