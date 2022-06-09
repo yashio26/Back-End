@@ -1,0 +1,36 @@
+Iniciar base: mongod --dbpath "C:\Users\Yasshio\Documents\Programacion\CoderHouse\db-desafio9"
+Conectamos mongo: mongo
+Creamos la base: use ecommerce
+Creamos dos colecciones: db.createCollection("mensajes") y db.createCollection("productos").
+
+1)  db.mensajes.insertMany([{email: "proaño@gmail.com", message: "Hola, tengo una consulta"}, {email: "darioproaño@gmail.com", message: "Hola"}, {email: "yashio@gmail.com", message: "¿Cual es la consulta?"}, {email: "proaño@gmail.com", message: "No me anda bien el codigo"}, {email: "yashio@gmail.com", message: "A mi tampoco me anda"}, {email: "proaño@gmail.com", message: "Uhh, bueno, voy a fijarme en otro lado"}, {email: "yashio@gmail.com", message: "Dale, avisame si encontras algo"}, {email: "proaño@gmail.com", message: "Si, te aviso, de ultima vemos en el afterclass"}, {email: "yashio@gmail.com", message: "Me habia olvidado de eso, gracias"}, {email: "proaño@gmail.com", message: "De nada!"}])
+
+    db.productos.insertMany([{name: "Lorem ipsum dolor sit amet", description: "Lorem ipsum dolor sit amet", stock:111, price:100, thumbnail:"Lorem ipsum dolor sit amet"}, {name: "Lorem ipsum dolor sit amet", description: "Lorem ipsum dolor sit amet", stock:222, price:200, thumbnail:"Lorem ipsum dolor sit amet"}, {name: "Lorem ipsum dolor sit amet", description: "Lorem ipsum dolor sit amet", stock:333, price:300, thumbnail:"Lorem ipsum dolor sit amet"}, {name: "Lorem ipsum dolor sit amet", description: "Lorem ipsum dolor sit amet", stock:444, price:400, thumbnail:"Lorem ipsum dolor sit amet"}, {name: "Lorem ipsum dolor sit amet", description: "Lorem ipsum dolor sit amet", stock:555, price:500, thumbnail:"Lorem ipsum dolor sit amet"}, {name: "Lorem ipsum dolor sit amet", description: "Lorem ipsum dolor sit amet", stock:666, price:600, thumbnail:"Lorem ipsum dolor sit amet"}, {name: "Lorem ipsum dolor sit amet", description: "Lorem ipsum dolor sit amet", stock:777, price:700, thumbnail:"Lorem ipsum dolor sit amet"}, {name: "Lorem ipsum dolor sit amet", description: "Lorem ipsum dolor sit amet", stock:888, price:800, thumbnail:"Lorem ipsum dolor sit amet"}, {name: "Lorem ipsum dolor sit amet", description: "Lorem ipsum dolor sit amet", stock:999, price:900, thumbnail:"Lorem ipsum dolor sit amet"}, {name: "Lorem ipsum dolor sit amet", description: "Lorem ipsum dolor sit amet", stock:2000, price:2000, thumbnail:"Lorem ipsum dolor sit amet"}])
+
+3)  db.mensajes.find()
+
+    db.productos.find()
+
+4)  db.mensajes.estimatedDocumentCount()
+
+    db.productos.estimatedDocumentCount()
+
+5a) db.productos.insert({name: "Lorem ipsum dolor sit amet", description: "Lorem ipsum dolor sit amet", stock:4500, price:4500, thumbnail:"Lorem ipsum dolor sit amet"})
+
+b)  db.productos.find({price: {$lt: 1000}}, {"name": 1})
+
+    db.productos.find({$and:[{price: {$gt: 1000}}, {price: {$lt: 3000}}]})
+
+    db.productos.find({price: {$gt: 3000}}, {"name": 1})
+
+    db.productos.find({}).sort({"price":1}).skip(2).limit(1)
+
+c)  db.productos.updateMany({}, {$set: {"stock": 100}}, {upsert: true})
+
+d)  db.productos.updateMany({price:{$gt:4000}},{$set:{stock:0}})
+
+e)  db.productos.deleteMany({price:{$lt:1000}})
+
+6)  use admin
+
+    db.createUser({user: 'pepe', pwd: 'asd456', roles: [{role:'read', db:'ecommerce'}]})
