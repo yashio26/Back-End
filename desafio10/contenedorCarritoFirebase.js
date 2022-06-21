@@ -20,7 +20,8 @@ class ContenedorCarritoFirebase {
         try{
             const timestamp = Date.now()
             let doc = await this.query.doc()
-            await doc.create({timestamp: timestamp, productos: []})
+            await doc.create({timestamp: timestamp})
+            return (`Se creó el carrito n° ${doc.id}`)
         }
         catch (error){
             throw new Error (error)
@@ -67,6 +68,28 @@ class ContenedorCarritoFirebase {
             throw new Error (error)
         }
     }
+
+    async saveProductInCart(id, productId, obj) {
+        try{
+            const productoAgregadoACarrito = await this.query.doc(id).collection('productos').doc(productId).set({productos: obj}, {merge: true})
+            console.log(productoAgregadoACarrito)
+            return (`Se agregó el producto n° ${productId} al carrito ${id}`);
+        }
+        catch(error){
+            throw new Error (error)
+        }
+    }
+
+    async deleteProductInCartById(idCarrito, idProducto) {
+        try{
+            const productoEliminadoDeCarrito = await this.query.doc(idCarrito).collection('productos').doc(idProducto).delete()
+            console.log(productoEliminadoDeCarrito)
+            return (`Se eliminó el producto n° ${idProducto} del carrito ${idCarrito}`);
+        }
+        catch(error){
+            throw new Error (error)
+        }
+    }
 }
 
 export default ContenedorCarritoFirebase
@@ -76,3 +99,4 @@ export default ContenedorCarritoFirebase
 //carritos.saveCarrito()
 //carritos.getAll()
 //carritos.deleteCartById(4)
+//carritos.saveProductInCart('EQrHCCwXbTDvxCkOkyAD', 1, {nombre: 'xd', precio: 2})
