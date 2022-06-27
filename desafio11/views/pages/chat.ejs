@@ -2,7 +2,12 @@
     <h1 style="color: rgb(255, 255, 255);">CHAT</h1>
     <div id="messages" style="margin: 2px;"></div>
     <form onsubmit="return addMessage(this);">
-        <input class="form-control" type="email" id="username" placeholder="Ingrese su e-mail" required style="width: 70%; margin: 1px;">
+        <input class="form-control" type="email" id="id" placeholder="Ingrese su e-mail" required style="width: 70%; margin: 1px;">
+        <input class="form-control" type="text" id="name" placeholder="Ingrese su nombre" required style="width: 70%; margin: 1px;">
+        <input class="form-control" type="text" id="lastname" placeholder="Ingrese su apellido" required style="width: 70%; margin: 1px;">
+        <input class="form-control" type="number" id="age" placeholder="Ingrese su edad" required style="width: 70%; margin: 1px;">
+        <input class="form-control" type="text" id="alias" placeholder="Ingrese su alias" required style="width: 70%; margin: 1px;">
+        <input class="form-control" type="text" id="avatar" placeholder="Ingrese su avatar" required style="width: 70%; margin: 1px;">
         <input class="form-control" type="text" id="text" placeholder="Cuentanos algo..." required style="width: 70%; margin: 1px;">
         <input class="btn btn-success mt-3 mb-5" type="submit" id="submitc" value="Enviar mensaje">
     </form>
