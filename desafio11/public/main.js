@@ -25,6 +25,13 @@ function render(data) {
 sockets.on("product", function(data) {render(data)})
 
 
+const autorSchema = new normalizr.schema.Entity("author", {}, {idAttribute: 'id'})
+
+const mensajeSchema = new normalizr.schema.Entity('mensaje', {nombre: autorSchema}, {idAttribute: 'id'})
+
+const chatSchema = new normalizr.schema.Entity("mensajes", {mensajes: [mensajeSchema]},{idAttribute: 'id'}) 
+
+
 function addMessage(a) {
     let date = new Date();
     const message = {
@@ -41,27 +48,38 @@ function addMessage(a) {
         hora: date.toLocaleTimeString()
     }
     sockets.emit("new-message", message);
+    document.getElementById("text").value = ""
     return false
 }
 
 function renders(dato) {
-    try{
-        const html2 = dato.map((element, index) => {
-            return(`
-            <div style="border: 1px solid black">
-                <div>
-                    <h4 style="color: rgb(255, 225, 225)">${element.author.id}: ${element.message}</h4>
-                </div>
-                <div>
-                    <p class="date">Enviado el ${element.fecha} a las ${element.hora}</p>
-                </div>
-            </div>`)
-        }).join(" ")
-    
-        document.getElementById("messages").innerHTML = html2
-    } catch (error){
-        throw new Error(error)
-    }
+    return dato.map((element) => {
+        return(`
+        <div style="border: 1px solid black">
+            <div>
+                <h4 style="color: rgb(255, 225, 225)">${element.author.id}: ${element.text}</h4>
+            </div>
+            <div>
+                <p class="date">Enviado el ${element.fecha} a las ${element.hora}</p>
+            </div>
+        </div>`)
+    }).join(" ")
 }
 
-sockets.on("messages", function(dato) {renders(dato)})
+    
+    sockets.on("mensajes", messages =>{
+    let msjsSize = JSON.stringify(messages).length
+
+    console.log('messagesNormaliz===', messages, msjsSize)
+
+    let desnormalizado = normalizr.denormalize(messages.result, chatSchema, messages.entities)
+
+    let msjsDesnSize = JSON.stringify(desnormalizado).length
+
+    console.log('messagesDenorm====', desnormalizado, msjsDesnSize)
+    console.log('MENSAJES DESNORMALIZADOS', desnormalizado.mensajes)
+
+    const html = renders(desnormalizado.mensajes)
+    document.getElementById('messages').innerHTML = html;
+})
+

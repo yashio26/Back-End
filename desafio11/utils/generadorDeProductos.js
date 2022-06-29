@@ -7,7 +7,6 @@ function generarProducto() {
         price: faker.commerce.price(),
         thumbnail: faker.image.avatar(),
     }
-    console.log(productosGenerados)
     return(productosGenerados)
 }
 

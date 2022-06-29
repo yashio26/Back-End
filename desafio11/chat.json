@@ -1,82 +1,16 @@
 [
   {
-    "entities": {
-      "mensajes": {
-        "adawdawd@wdwad": {
-          "id": "adawdawd@wdwad",
-          "nombre": "",
-          "apellido": "dadawd",
-          "edad": "22",
-          "alias": "sdawd",
-          "avatar": "ddad"
-        }
-      }
+    "author": {
+      "id": "email@email.com",
+      "nombre": "",
+      "apellido": "proaño",
+      "edad": "2020",
+      "alias": "dario",
+      "avatar": "url.com"
     },
-    "result": [
-      "adawdawd@wdwad",
-      "sdawdawdawd d awd ad  d  da",
-      "27/6/2022",
-      "0:56:07"
-    ]
-  },
-  {
-    "entities": {
-      "mensajes": {
-        "adawdawd@wdwad": {
-          "id": "adawdawd@wdwad",
-          "nombre": "",
-          "apellido": "dadawd",
-          "edad": "22",
-          "alias": "sdawd",
-          "avatar": "ddad"
-        }
-      }
-    },
-    "result": [
-      "adawdawd@wdwad",
-      "sdawdawdawd d awd ad  d  da",
-      "27/6/2022",
-      "0:56:12"
-    ]
-  },
-  {
-    "entities": {
-      "mensajes": {
-        "adawdawd@wdwad": {
-          "id": "adawdawd@wdwad",
-          "nombre": "",
-          "apellido": "dadawd",
-          "edad": "22",
-          "alias": "sdawd",
-          "avatar": "ddad"
-        }
-      }
-    },
-    "result": [
-      "adawdawd@wdwad",
-      "sdawdawdawd d awd ad  d  da",
-      "27/6/2022",
-      "0:58:27"
-    ]
-  },
-  {
-    "entities": {
-      "mensajes": {
-        "adawdawd@wdwad": {
-          "id": "adawdawd@wdwad",
-          "nombre": "",
-          "apellido": "dadawd",
-          "edad": "22",
-          "alias": "sdawd",
-          "avatar": "ddad"
-        }
-      }
-    },
-    "result": [
-      "adawdawd@wdwad",
-      "sdawdawdawd d awd ad  d  da",
-      "27/6/2022",
-      "0:58:40"
-    ]
+    "text": "Hola!",
+    "fecha": "29/6/2022",
+    "hora": "20:07:54",
+    "id": 1
   }
 ]

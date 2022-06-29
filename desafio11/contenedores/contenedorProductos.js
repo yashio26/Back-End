@@ -1,6 +1,6 @@
 import admin from 'firebase-admin';
 import fs from 'fs';
-import generarProducto from './utils/generadorDeProductos.js';
+import generarProducto from '../utils/generadorDeProductos.js';
 
 const serviceAccount = JSON.parse(fs.readFileSync("./db/desafio11-2970b-firebase-adminsdk-833dr-11cba7c705.json"));
 
@@ -23,7 +23,7 @@ class ContenedorProductos {
                 let fakeProd = generarProducto()
                 this.memory.push(fakeProd)
             }
-            console.log(this.memory)
+            // console.log(this.memory)
             return this.memory;
         }
         catch(error){
@@ -52,7 +52,6 @@ class ContenedorProductos {
                 price: doc.data().price,
                 thumbnail: doc.data().thumbnail
             }))
-            console.log(response)
             return response
         }
         catch(error){
