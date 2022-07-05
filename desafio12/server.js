@@ -82,7 +82,3 @@ httpServer.listen(PORT, () => console.log('Iniciando en el puerto: ' + PORT))
         io.sockets.emit('messages', await Contenedor.getMsg())
     })
 }) */
-
-
-
-
