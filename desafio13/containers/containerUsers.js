@@ -14,7 +14,6 @@ class ContainerUsers{
     async saveUser(user){
         try{
             await models.usuarios.create(user)
-            return ('Usuario registrado!')
         }
         catch(error){
             throw new Error(error)
@@ -24,7 +23,6 @@ class ContainerUsers{
     async getUserByUsername(username){
         try{
             const usuario = await models.usuarios.findOne({username: username})
-            console.log('Usuario encontrado en contenedor')
             return (usuario)
         }
         catch(error){

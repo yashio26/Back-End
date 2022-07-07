@@ -37,10 +37,9 @@ app.use(express.urlencoded({ extended: false}))
 passport.use('register', new LocalStrategy({
     passReqToCallback: true
 }, async (req, username, password, done) => {
-        console.log('Registrando usuario con username y password: ', username, password)
         const usuario = await listaDeUsuarios.getUserByUsername(username)
         if (usuario) {
-            return done('El usuario ya existe')
+            return done(null, false)
         }
         const user = {
             username,
@@ -93,13 +92,21 @@ function isAuth(req, res, next) {
 /* REGISTRO */
 
 app.get('/registro', (req, res) => {
-    res.render('registro.ejs')
+    if (req.isAuthenticated()) {
+        res.redirect('/')
+    } else{
+        res.render('registro.ejs')
+    }
 })
 
 app.post('/registro', passport.authenticate('register', {
     successRedirect: '/',
-    failureRedirect: '/error'
+    failureRedirect: '/error-registro'
 }))
+
+app.get('/error-registro', (req, res) => {
+    res.render('errorRegistro.ejs')
+})
 
 /* INICIO SESION */
 
@@ -113,21 +120,27 @@ app.get('/iniciosesion', (req, res) => {
 
 app.post('/iniciosesion', passport.authenticate('login', {
     successRedirect: '/',
-    failureRedirect: '/error'
+    failureRedirect: '/error-inicio-sesion'
 }))
+
+app.get('/error-inicio-sesion', (req, res) => {
+    res.render('errorInicioSesion.ejs')
+})
 
 /* COMERCIO */
 
 app.get('/', isAuth, (req, res) => {
-    const datos = req.user.username
-    res.render('bienvenida.ejs', { datos })
+    const username = req.session.passport.user
+    res.render('bienvenida.ejs', { username })
 })
 
 /* CERRAR SESION */
 
 app.get('/sesioncerrada', (req, res) => {
     req.logout(err => {
-        res.redirect('/iniciosesion')
+        req.session.destroy(err => {
+            res.redirect('/iniciosesion')
+        })
     })
 })
 
