@@ -1,16 +1,15 @@
 const sockets = io.connect()
 
-function addProduct(e) {
-    const product = {
-        name: document.getElementById("name").value,
-        price: document.getElementById("price").value,
-        thumbnail: document.getElementById("thumbnail").value
+function addUser(e) {
+    const user = {
+        username: document.getElementById("email").value,
+        password: document.getElementById("contrasenia").value
     }
-    sockets.emit("new-product", product);
+    sockets.emit("new-user", user);
     return false
 }
 
-function render(data) {
+/* function render(data) {
     const html = data.map((elem, index) => {
         return(`
         <tr>
@@ -22,9 +21,17 @@ function render(data) {
     document.getElementById("product").innerHTML = html
 }
 
-sockets.on("product", function(data) {render(data)})
+sockets.on("product", function(data) {render(data)}) */
 
 
+
+
+
+
+
+
+
+/* 
 const autorSchema = new normalizr.schema.Entity("author", {}, {idAttribute: 'id'})
 
 const mensajeSchema = new normalizr.schema.Entity('mensaje', {nombre: autorSchema}, {idAttribute: 'id'})
@@ -36,7 +43,12 @@ function addMessage(a) {
     let date = new Date();
     const message = {
         author: {
-            id: document.getElementById("username").value,
+            id: document.getElementById("id").value,
+            nombre: document.getElementById("name").value,
+            apellido: document.getElementById("lastname").value,
+            edad: document.getElementById("age").value,
+            alias: document.getElementById("alias").value,
+            avatar: document.getElementById("avatar").value,
             },
         text: document.getElementById("text").value,
         fecha: date.toLocaleDateString(),
@@ -78,3 +90,4 @@ function renders(dato) {
     document.getElementById('messages').innerHTML = html;
 })
 
+ */
