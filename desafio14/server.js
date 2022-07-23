@@ -21,6 +21,8 @@ import passport from 'passport'
 import LocalStrategy from 'passport-local'
 import dotenv from 'dotenv/config'
 import parseArgs from 'yargs/yargs'
+import { fork } from 'child_process'
+import path from 'path'
 
 const yargs = parseArgs(process.argv.slice(2))
 const { PORT, _ } = yargs
@@ -179,7 +181,15 @@ app.get('/info', (req, res) => {
 })
 
 app.get('/randoms', (req, res) => {
-    res.render('randoms.ejs')
+    const cantidadDeNumeros = req.query.cant || 100000000
+    const computo = fork(path.resolve(process.cwd(), 'computo.js'))
+    computo.on('message', mensaje => {
+        if (mensaje === 'listo') {
+            computo.send(cantidadDeNumeros)
+        } else {
+            res.render('randoms.ejs', { mensaje })
+        }
+    })
 })
 
 io.on('connection', async (sockets) => {
