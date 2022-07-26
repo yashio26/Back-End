@@ -192,11 +192,6 @@ app.get('/randoms', (req, res) => {
     })
 })
 
-app.get('/datos', (req, res) => {
-    console.log('Entrando a datos')
-    res.send('aaaaaaaaaaaaaaaa')
-})
-
 io.on('connection', async (sockets) => {
     sockets.emit('product', await listaDeProductos.getProds())//Comentar el de abajo para usar firebase.
     //sockets.emit('product', await listaDeProductos.testingProducts())//Metodo parcial para mostrar test de productos.
