@@ -2,3 +2,14 @@ Para ejecutar el servidor 8080, usar:
 pm2 start server.js --name="server8080" --watch -- 8080
 
 Para ejecutar /randoms en modo cluster, con el servidor 8082, 8083, 8084 y 8085, usar:
+pm2 start server.js --name="server8082" --watch -- 8082 
+pm2 start server.js --name="server8083" --watch -- 8083 
+pm2 start server.js --name="server8084" --watch -- 8084 
+pm2 start server.js --name="server8085" --watch -- 8085
+
+
+Preguntar al profesor acerca de esta ejecucion
+pm2 start server.js --name="server8082" --watch -i 2 -- 8082
+pm2 start server.js --name="server8083" --watch -i 2 -- 8083
+pm2 start server.js --name="server8084" --watch -i 2 -- 8084
+pm2 start server.js --name="server8085" --watch -i 2 -- 8085
