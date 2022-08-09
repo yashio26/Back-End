@@ -24,6 +24,8 @@ import parseArgs from 'yargs/yargs'
 import { fork } from 'child_process'
 import path from 'path'
 
+import compression from 'compression'
+
 const PORT = parseInt(process.argv.slice(2)) || 8080
 /* const { PORT, _ } = yargs
     .alias({
@@ -179,6 +181,10 @@ const executionPath = process.execPath
 app.get('/info', (req, res) => {
     res.render('info.ejs', { inputArguments, directory, processId, windowsVersion, nodeVersion, reservedMemory, executionPath })
 })
+
+app.get('/gzip', compression(), (req, res) => {
+    res.render('info.ejs', { inputArguments, directory, processId, windowsVersion, nodeVersion, reservedMemory, executionPath })
+}) 
 
 app.get('/randoms', (req, res) => {
     const cantidadDeNumeros = req.query.cant || 100000000
