@@ -208,4 +208,4 @@ async function listarMensajesNormalizados() {
     return normalizados
 }
 
-httpServer.listen(PORT, () => console.log('Iniciando en el puerto: ' + PORT))
+httpServer.listen(PORT, () => console.log('Iniciando en el puerto: ' + PORT)) 
