@@ -17,7 +17,6 @@ function render(data) {
         <td>${elem.name}</td>
         <td>$ ${elem.price}</td>
         <td><img src="${elem.thumbnail}" height="40vh" width="40vw"></img></td>
-        <td><button class="btn btn-primary" href="/carrito/${elem.id}">Agregar al carrito</button></td>
         </tr>`)
     }).join(" ")
     document.getElementById("product").innerHTML = html
@@ -37,7 +36,7 @@ function addMessage(a) {
     let date = new Date();
     const message = {
         author: {
-            id: document.getElementById("email").value,
+            id: document.getElementById("username").value,
             },
         text: document.getElementById("text").value,
         fecha: date.toLocaleDateString(),

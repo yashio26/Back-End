@@ -2,7 +2,7 @@ import admin from 'firebase-admin';
 import fs from 'fs';
 import generarProducto from '../utils/generadorDeProductos.js';
 
-const serviceAccount = JSON.parse(fs.readFileSync("./prodDB/desafio11-2970b-firebase-adminsdk-833dr-11cba7c705.json"));
+const serviceAccount = JSON.parse(fs.readFileSync("./db/desafio11-2970b-firebase-adminsdk-833dr-11cba7c705.json"));
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
@@ -42,16 +42,6 @@ class ContenedorProductos {
         }
     }
 
-    async getProdById(id) {
-        try{
-            let prodEncontrado = await this.query.doc(id).get()
-            return prodEncontrado.data()
-        }
-        catch(error){
-            throw new Error (error)
-        }
-    }
-
     async getProds() {
         try{
             const querySnapshot = await this.query.get()
@@ -71,7 +61,3 @@ class ContenedorProductos {
 };
 
 export default ContenedorProductos;
-
-/* const productoParaAgregarACarrito = new ContenedorProductos()
-
-console.log(await productoParaAgregarACarrito.getProdById('csufR5fDLrwsdSaZqhH8')) */

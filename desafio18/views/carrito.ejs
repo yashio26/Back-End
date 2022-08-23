@@ -15,10 +15,25 @@
 <body>
     <div class="container-mt-3">
         <div class="jumbotron">
-            <% if (carrito.length <= 0) { %>
+            <% if (carrito.productos.length <= 0) { %>
             <h1>No hay productos en el carrito</h1>
             <% } else { %>
-            <h1>Hay <%= carrito.length %> productos en el carrito</h1>
+            <h1>Hay <%= carrito.productos.length %> productos en el carrito</h1>
+            <div>
+                <% carrito.productos.map(producto => { %>
+                <div>
+                    <h3>Nombre</h3>
+                    <p><%= producto.name %></p>
+                </div>
+                <div>
+                    <h3>Precio</h3>
+                    <p><%= producto.price %></p>
+                </div>
+                <% }) %>
+            </div>
+            <form action="/comprar/1" method="post">
+                <input type="submit" value="Comprar">
+            </form>
             <% } %>
         </div>
     </div>

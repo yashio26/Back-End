@@ -9,40 +9,40 @@
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     </link>
     <script src="/socket.io/socket.io.js"></script>
-    <title>Datos personales</title>
+    <title>Desafio 14- Info</title>
 </head>
 
 <body>
     <div class="container-mt-3">
         <div class="jumbotron">
-            <h1>Datos personales</h1>
+            <h1>Informacion</h1>
             <div>
-                <h3>Nombre</h3>
-                <p><%= informacion.name %></p>
+                <h3>Argumentos de entrada</h3>
+                <p><%= inputArguments %></p>
             </div>
             <div>
-                <h3>Email</h3>
-                <p><%= informacion.email %></p>
+                <h3>Path de ejecucion</h3>
+                <p><%= executionPath %></p>
             </div>
             <div>
-                <h3>Nombre de usuario</h3>
-                <p><%= informacion.username %></p>
+                <h3>Sistema operativo</h3>
+                <p><%= windowsVersion %></p>
             </div>
             <div>
-                <h3>Dirección</h3>
-                <p><%= informacion.address %></p>
+                <h3>Process id</h3>
+                <p><%= processId %></p>
             </div>
             <div>
-                <h3>Edad</h3>
-                <p><%= informacion.age %></p>
+                <h3>Version de Node</h3>
+                <p><%= nodeVersion %></p>
             </div>
             <div>
-                <h3>Telefono</h3>
-                <p><%= informacion.phone %></p>
+                <h3>Carpeta del proyecto</h3>
+                <p><%= directory %></p>
             </div>
             <div>
-                <h3>ID</h3>
-                <p><%= informacion.id %></p>
+                <h3>Memoria total reservada</h3>
+                <p><%= reservedMemory %></p>
             </div>
         </div>
     </div>

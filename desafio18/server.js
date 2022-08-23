@@ -18,6 +18,8 @@ import ContenedorProductos from './containers/contenedorProductos.js'
 const listaDeProductos = new ContenedorProductos;
 import ContenedorCarrito from './containers/contenedorCarritoMongo.js'
 const productosEnCarrito = new ContenedorCarrito;
+import ContainerPurchases from './containers/containerPurchases.js'
+const listaDeCompras = new ContainerPurchases;
 /*  */
 import passport from 'passport'
 import LocalStrategy from 'passport-local'
@@ -25,6 +27,7 @@ import dotenv from 'dotenv/config'
 import parseArgs from 'yargs/yargs'
 import { fork } from 'child_process'
 import path from 'path'
+import { async } from '@firebase/util'
 
 const PORT = process.env.PORT || 8080
 
@@ -73,7 +76,9 @@ passport.use('register', new LocalStrategy({
             age: req.body.age,
             phone: req.body.phone
         }
-        listaDeUsuarios.saveUser(user)
+        const newUser = await listaDeUsuarios.saveUser(user)
+        console.log('newUser es', newUser)
+        productosEnCarrito.saveCarrito(newUser)
         console.log('Usuario creado')
         return done(null, user)
     }
@@ -155,17 +160,19 @@ app.get('/error-inicio-sesion', (req, res) => {
     res.render('errorInicioSesion.ejs')
 })
 
-/* CARRITO */
-
-app.get('/carrito', isAuth, async (req, res) => {
-    res.render('carrito.ejs', { carrito: sessionCart })
-})
 
 /* COMERCIO */
 
 app.get('/', isAuth, (req, res) => {
     const username = req.session.passport.user
     res.render('bienvenida.ejs', { username, carrito: sessionCart })
+})
+
+/* DATOS PERSONALES */
+
+app.get('/datos-personales', isAuth, async (req, res) => {
+    const informacion = await listaDeUsuarios.getUserByUsername(req.session.passport.user)
+    res.render('datosPersonales.ejs', { informacion })
 })
 
 /* CERRAR SESION */
@@ -178,13 +185,69 @@ app.get('/sesioncerrada', (req, res) => {
     })
 })
 
-/* DATOS PERSONALES */
 
-app.get('/datos-personales', isAuth, (req, res) => {
-    console.log('req user', req.session.passport.user)
-    console.log('edad', req.session)
-    res.render('datosPersonales.ejs', {  })
+/* CARRITO */
+
+app.get('/carrito', isAuth, async (req, res) => {
+    const informacion = await listaDeUsuarios.getUserByUsername(req.session.passport.user)
+    console.log('informacion es', informacion.id)
+    const carrito = await productosEnCarrito.getCartByUserId(informacion.id)
+    console.log('carrito es', carrito)
+    const productoParaAgregarACarrito = await listaDeProductos.getProdById('eGaxGE5UpLKgPjwkGwMC')
+    console.log('productoParaAgregarACarrito es', productoParaAgregarACarrito)
+    const carritoActualizado = await productosEnCarrito.saveProductInCart(informacion._id, JSON.stringify(productoParaAgregarACarrito, null, 2))
+    console.log('carritoActualizado es', carritoActualizado)
+    res.render('carrito.ejs', { carrito: carrito })
 })
+
+app.post('/comprar/:id', isAuth, async (req, res) => {
+    const idCarrito = req.params.id
+    const productosAComprar = await productosEnCarrito.getCartByUserId('6300850d7e0595710e2dad73')
+    console.log('productosAComprar es', productosAComprar)
+    const datosComprador = await listaDeUsuarios.getUserByUsername(req.session.passport.user)
+    console.log('datosComprador es', datosComprador)
+    const productoComprado = await listaDeCompras.saveCompra(JSON.stringify(productosAComprar.productos, null, 2), JSON.stringify(datosComprador, null, 2))
+    console.log('productoComprado es', productoComprado)
+    res.redirect('/')
+})
+
+
+
+
+
+
+
+
+
+
+
+
+app.post('/carrito/:productId', async (req, res) => {
+    console.log('req.session.passport.user es', req.session.passport.user)
+    const idCarrito = await listaDeUsuarios.getUserByUsername(req.session.passport.user)
+    console.log('idCarrito es', idCarrito)
+    const productId = req.params.productId
+    const productoParaAgregarACarrito = await listaDeProductos.getProdById(productId)
+    res.json(await productosEnCarrito.saveProductInCart(idCarrito, productId, JSON.stringify(productoParaAgregarACarrito, null, 2)))
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* SOCKET */
 
 io.on('connection', async (sockets) => {
     sockets.emit('product', await listaDeProductos.getProds())

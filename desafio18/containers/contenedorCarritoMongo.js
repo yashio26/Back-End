@@ -11,20 +11,20 @@ class ContenedorCarritoMongo{
         console.log("Conectado a MongoDB")
     }
 
-    async saveCarrito(obj) {
+    async saveCarrito(idUsuario) {
         try{
             let timestamp = Date.now()
-            const newObj = {...obj, timestamp: timestamp};
+            const newObj = {idUsuario: idUsuario};
             console.log(newObj)
             await models.carrito.create(newObj);
-            return ('Carrito creado')
+            return (idUsuario)
         }catch(error){
             throw new Error (error)
         }
     }
 
-    async getCartById(id){
-        let carritoEncontrado = await models.carrito.findOne({_id: id})
+    async getCartByUserId(id){
+        let carritoEncontrado = await models.carrito.findOne({idUsuario: id})
         console.log(carritoEncontrado)
         return (carritoEncontrado)
     }
@@ -51,12 +51,12 @@ class ContenedorCarritoMongo{
         }
     }
 
-    async saveProductInCart(id, productId, obj){
+    async saveProductInCart(idCarrito, obj){
         try{
-            let objParseado = JSON.parse(obj)
-            let carritoEncontrado = await models.carrito.findByIdAndUpdate({_id: id}, {$push: {productos: objParseado}})
+            /* let objParseado = JSON.parse(obj) */
+            let carritoEncontrado = await models.carrito.findByIdAndUpdate({_id: idCarrito}, {$push: {productos: obj}})
             console.log(carritoEncontrado)
-            return (`Se agregó el producto n° ${productId} al carrito ${id}`)
+            return (`Se agregó el producto n° ${obj.id} al carrito n° ${idCarrito}`)
         }
         catch (error){
             throw new Error(error)
