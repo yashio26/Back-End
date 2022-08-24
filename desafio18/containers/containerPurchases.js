@@ -1,6 +1,12 @@
 import mongoose from "mongoose";
 import * as models from "../models/compra.js"
 import { createTransport } from "nodemailer"
+import twilio from "twilio"
+
+const accountSid = 'AC60b52ea091809833fd750ba8d98d976f'
+const authToken = 'a4cafc37781970d2791dfd12b38e15ca'
+
+const client = twilio(accountSid, authToken)
 
 const mail = 'yashio200007@gmail.com'
 const contrasenia = 'vxiyfmfxfugroikb'
@@ -42,6 +48,15 @@ class ContenedorCompra{
             console.log(newObj)
             const nuevaCompra = await models.compra.create(newObj)
             const enviarMail = await transporter.sendMail(mailOptions(nuevaCompra))
+            const enviarSMS = await client.messages.create({
+                body: `Se ha registrado una nueva compra en DBDStore. Sus datos son:
+                Productos: ${nuevaCompra.productos}
+                Comprador: ${nuevaCompra.comprador}
+                Telefono: ${nuevaCompra.comprador.phone}`,
+                from: `whatsapp:+14155238886`,
+                to: `whatsapp:+5491136342495`
+            })
+            console.log("Compra registrada", enviarSMS)
             return ('Compra creada con la orden número ' + nuevaCompra._id)
         }catch(error){
             throw new Error (error)
