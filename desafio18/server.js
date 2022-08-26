@@ -161,7 +161,6 @@ app.get('/error-inicio-sesion', (req, res) => {
     res.render('errorInicioSesion.ejs')
 })
 
-
 /* COMERCIO */
 
 app.get('/', isAuth, (req, res) => {
@@ -191,19 +190,25 @@ app.get('/sesioncerrada', (req, res) => {
 
 app.get('/carrito', isAuth, async (req, res) => {
     const informacion = await listaDeUsuarios.getUserByUsername(req.session.passport.user)
-    console.log('informacion es', informacion.id)
     const carrito = await productosEnCarrito.getCartByUserId(informacion.id)
-    console.log('carrito es', carrito)
-    const productoParaAgregarACarrito = await listaDeProductos.getProdById('eGaxGE5UpLKgPjwkGwMC')
-    console.log('productoParaAgregarACarrito es', productoParaAgregarACarrito)
-    const carritoActualizado = await productosEnCarrito.saveProductInCart(informacion._id, JSON.stringify(productoParaAgregarACarrito, null, 2))
-    console.log('carritoActualizado es', carritoActualizado)
-    res.render('carrito.ejs', { carrito: carrito })
+    res.render('carrito.ejs', { productos: carrito.productos,  idCarrito: carrito.idUsuario })
 })
 
-app.post('/comprar/:id', isAuth, async (req, res) => {
-    const idCarrito = req.params.id
-    const productosAComprar = await productosEnCarrito.getCartByUserId('6300850d7e0595710e2dad73')
+/* AGREGAR PRODUCTO A CARRITO */
+
+app.post('/agregar/:idProducto', isAuth, async (req, res) => {
+    const idProducto = req.params.idProducto
+    const informacion = await listaDeUsuarios.getUserByUsername(req.session.passport.user)
+    const productoParaAgregarACarrito = await listaDeProductos.getProdById(idProducto)
+    const carritoActualizado = await productosEnCarrito.saveProductInCart(informacion.id, JSON.stringify(productoParaAgregarACarrito, null, 2))
+    res.redirect('/carrito')
+})
+
+/* COMPRAR */
+
+app.post('/comprar/:idCarrito', isAuth, async (req, res) => {
+    const idCarrito = req.params.idCarrito
+    const productosAComprar = await productosEnCarrito.getCartByUserId(idCarrito)
     console.log('productosAComprar es', productosAComprar)
     const datosComprador = await listaDeUsuarios.getUserByUsername(req.session.passport.user)
     console.log('datosComprador es', datosComprador)
@@ -211,42 +216,6 @@ app.post('/comprar/:id', isAuth, async (req, res) => {
     console.log('productoComprado es', productoComprado)
     res.redirect('/')
 })
-
-
-
-
-
-
-
-
-
-
-
-
-app.post('/carrito/:productId', async (req, res) => {
-    console.log('req.session.passport.user es', req.session.passport.user)
-    const idCarrito = await listaDeUsuarios.getUserByUsername(req.session.passport.user)
-    console.log('idCarrito es', idCarrito)
-    const productId = req.params.productId
-    const productoParaAgregarACarrito = await listaDeProductos.getProdById(productId)
-    res.json(await productosEnCarrito.saveProductInCart(idCarrito, productId, JSON.stringify(productoParaAgregarACarrito, null, 2)))
-})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* SOCKET */
 

@@ -23,9 +23,8 @@ class ContenedorCarritoMongo{
         }
     }
 
-    async getCartByUserId(id){
-        let carritoEncontrado = await models.carrito.findOne({idUsuario: id})
-        console.log(carritoEncontrado)
+    async getCartByUserId(idUsuario){
+        let carritoEncontrado = await models.carrito.findOne({idUsuario: idUsuario})
         return (carritoEncontrado)
     }
 
@@ -34,6 +33,16 @@ class ContenedorCarritoMongo{
             const usuarios = await models.carrito.find()
             console.log(usuarios)
             return (usuarios)
+        }
+        catch(error){
+            throw new Error (error)
+        }
+    }
+
+    async testDeCarrito(idUsuario){
+        try{
+            const carrito = await models.carrito.findOne({idUsuario: idUsuario})
+            console.log('carrito con idUsuario ' + idUsuario + ' es: ' + carrito)
         }
         catch(error){
             throw new Error (error)
@@ -51,12 +60,12 @@ class ContenedorCarritoMongo{
         }
     }
 
-    async saveProductInCart(idCarrito, obj){
+    async saveProductInCart(idUsuario, obj){
         try{
             /* let objParseado = JSON.parse(obj) */
-            let carritoEncontrado = await models.carrito.findByIdAndUpdate({_id: idCarrito}, {$push: {productos: obj}})
-            console.log(carritoEncontrado)
-            return (`Se agregó el producto n° ${obj.id} al carrito n° ${idCarrito}`)
+            let carritoEncontrado = await models.carrito.findOneAndUpdate({idUsuario: idUsuario}, {$push: {productos: obj}}, {new: true})
+            console.log('carrito encontrado en contenedor es: ' + carritoEncontrado)
+            return (`Se agregó el producto n° ${obj.id} al carrito n° ${idUsuario}`)
         }
         catch (error){
             throw new Error(error)

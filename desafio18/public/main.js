@@ -17,7 +17,11 @@ function render(data) {
         <td>${elem.name}</td>
         <td>$ ${elem.price}</td>
         <td><img src="${elem.thumbnail}" height="40vh" width="40vw"></img></td>
-        <td><button class="btn btn-primary" href="/carrito/${elem.id}">Agregar al carrito</button></td>
+        <td>
+            <form action="/agregar/${elem.id}" method="post">
+                <input type="submit" value="Agregar al carrito" class="btn btn-primary">
+            </form>
+        </td>
         </tr>`)
     }).join(" ")
     document.getElementById("product").innerHTML = html

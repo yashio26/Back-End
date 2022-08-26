@@ -19,7 +19,7 @@ const chatSchema = new schema.Entity("mensajes", {
 function normalizer(obj) {
   let normalizado = normalize(obj, chatSchema)
   console.log('entra a normalizer')
-  print(normalizado)
+  /* print(normalizado) */
   console.log('fin normalizado')
   return normalizado
 }

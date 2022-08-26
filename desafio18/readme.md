@@ -1,2 +1,3 @@
 Repaso breve sobre el avance del proyecto: Hay parte del frontend que no estaria conectando del todo con el backend, por lo que no está funcionando al 100%.
 En especial, lo que no anda, por ejemplo, es agregar a carrito un producto. Para no estancarme y comprobar lo demás, lo que hice fue setear un id estatico de un producto x, de esta forma se agregaba al carrito y asi poder continuar. De igual manera la compra, esto pasa porque da un error sobre ObjectId, de las soluciones que probe no funcionaron por el momento. Cuando encuentre la solucion, lo unico que tendria que hacer, seria sacar el id estatico, por la variable.
+El token es: 65b9b8714d814b148ee2e1ee0a5549e 4
