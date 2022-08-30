@@ -10,49 +10,49 @@
     </link>
     <script src="/socket.io/socket.io.js"></script>
     <link rel="stylesheet" href="./styles/style.css">
-    <title>DBDStore</title>
+    <title>Datos personales</title>
 </head>
 
 <body>
-    <div class="divHome">
-        <div>
-            <h1>Bienvenido <%= username %>!</h1>
-        </div>
+    <div class="container-mt-3">
         <div class="jumbotron">
-            <a href="/sesioncerrada">Cerrar Sesión</a>
+            <h1>Datos personales</h1>
+            <div>
+                <h3>Nombre</h3>
+                <p><%= informacion.name %></p>
+            </div>
+            <div>
+                <h3>Email</h3>
+                <p><%= informacion.email %></p>
+            </div>
+            <div>
+                <h3>Nombre de usuario</h3>
+                <p><%= informacion.username %></p>
+            </div>
+            <div>
+                <h3>Dirección</h3>
+                <p><%= informacion.address %></p>
+            </div>
+            <div>
+                <h3>Edad</h3>
+                <p><%= informacion.age %></p>
+            </div>
+            <div>
+                <h3>Telefono</h3>
+                <p><%= informacion.phone %></p>
+            </div>
+            <div>
+                <h3>ID</h3>
+                <p><%= informacion.id %></p>
+            </div>
         </div>
-        <div class="jumbotron">
-            <a href="/datos-personales">Datos personales</a>
-        </div>
-        <div class="jumbotron">
-            <img src="<%= avatar %>">
-        </div>
-        <% if (carrito.length > 0) { %>
-        <div class="jumbotron">
-            <a href="/carrito">Ver Carrito</a>
-        </div>
-        <% } %>
-        <div class="jumbotron">
-            <%- include('./prod.ejs')-%>
-        </div>
-        <div class="jumbotron">
-            <%- include('./chat.ejs')-%>
-        </div>
-        <div id="mensajes"></div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
         crossorigin="anonymous">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/normalizr@3.6.1/dist/normalizr.browser.min.js"></script>
-    <script src="main.js"></script>
 
 </body>
 
 </html>
-
-
-
-
-
-
