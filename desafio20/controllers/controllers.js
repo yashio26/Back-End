@@ -1,10 +1,10 @@
-import ContainerUsers from '../persistence/containerUsers.js'
+import ContainerUsers from '../persistence/daos/usersDaoDb.js'
 const listaDeUsuarios = new ContainerUsers;
-import ContenedorProductos from '../persistence/contenedorProductos.js'
+import ContenedorProductos from '../persistence/daos/productsDaoDb.js'
 const listaDeProductos = new ContenedorProductos;
-import ContenedorCarrito from '../persistence/contenedorCarritoMongo.js'
+import ContenedorCarrito from '../persistence/daos/cartDaoDb.js'
 const productosEnCarrito = new ContenedorCarrito;
-import ContainerPurchases from '../persistence/containerPurchases.js'
+import ContainerPurchases from '../persistence/daos/purchasesDaoDb.js'
 const listaDeCompras = new ContainerPurchases;
 
 async function getRegister(req, res) {

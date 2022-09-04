@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import * as models from '../models/carrito.js'
+import * as models from '../../models/carrito.js'
 
 class ContenedorCarritoMongo{
     constructor(){

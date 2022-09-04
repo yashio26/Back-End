@@ -2,9 +2,9 @@ import { Router } from 'express'
 import passport from 'passport'
 import LocalStrategy from 'passport-local'
 import controllers from '../controllers/controllers.js'
-import ContainerUsers from '../persistence/containerUsers.js'
+import ContainerUsers from '../persistence/daos/usersDaoDb.js'
 const listaDeUsuarios = new ContainerUsers;
-import ContenedorCarrito from '../persistence/contenedorCarritoMongo.js'
+import ContenedorCarrito from '../persistence/daos/cartDaoDb.js'
 const productosEnCarrito = new ContenedorCarrito;
 
 const rutasUrl = Router()

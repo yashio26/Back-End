@@ -1,5 +1,5 @@
 import mongoose from "mongoose"
-import * as models from "../models/usuarios.js"
+import * as models from "../../models/usuarios.js"
 import { createTransport } from "nodemailer"
 
 const mail = 'yashio200007@gmail.com'

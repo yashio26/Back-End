@@ -1,6 +1,6 @@
 import admin from 'firebase-admin';
 import fs from 'fs';
-import generarProducto from '../utils/generadorDeProductos.js';
+import generarProducto from '../../utils/generadorDeProductos.js';
 
 const serviceAccount = JSON.parse(fs.readFileSync("./prodDB/desafio11-2970b-firebase-adminsdk-833dr-11cba7c705.json"));
 

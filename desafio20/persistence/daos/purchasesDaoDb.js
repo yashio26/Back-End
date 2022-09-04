@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import * as models from "../models/compra.js"
+import * as models from "../../models/compra.js"
 import { createTransport } from "nodemailer"
 import twilio from "twilio"
 

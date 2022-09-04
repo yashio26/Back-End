@@ -9,9 +9,9 @@ import session from 'express-session'
 import connectMongo from 'connect-mongo'
 import cookieParser from 'cookie-parser'
 import normalizer from './utils/normalizr.js'
-import ContenedorMensajes from './persistence/contenedorMensajes.js'
+import ContenedorMensajes from './persistence/daos/messagesDaoFile.js'
 const historialDeMensajes = new ContenedorMensajes;
-import ContenedorProductos from './persistence/contenedorProductos.js'
+import ContenedorProductos from './persistence/daos/productsDaoDb.js'
 const listaDeProductos = new ContenedorProductos;
 import rutasUrl from './routes/routes.js'
 import dotenv from 'dotenv/config'
