@@ -9,8 +9,8 @@ import session from 'express-session'
 import connectMongo from 'connect-mongo'
 import cookieParser from 'cookie-parser'
 import normalizer from './utils/normalizr.js'
-import ContenedorMensajes from './persistence/daos/messagesDaoFile.js'
-const historialDeMensajes = new ContenedorMensajes;
+import MessagesRepository from './repository/messageRepository.js'
+const historialDeMensajes = new MessagesRepository;
 import ContenedorProductos from './persistence/daos/productsDaoDb.js'
 const listaDeProductos = new ContenedorProductos;
 import rutasUrl from './routes/routes.js'
@@ -42,6 +42,7 @@ app.use('/', rutasUrl)
 
 io.on('connection', async (sockets) => {
     sockets.emit('product', await listaDeProductos.getProds())
+    console.log( await listaDeProductos.getProds())
     sockets.on('new-product', async data => {
         await listaDeProductos.saveProd(data)
         io.sockets.emit('product', await listaDeProductos.getProds())

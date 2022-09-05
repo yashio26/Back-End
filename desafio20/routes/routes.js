@@ -34,8 +34,9 @@ passport.use('register', new LocalStrategy({
     }
 ))
 passport.use('login', new LocalStrategy( async (username, password, done) => {
-    const user = await listaDeUsuarios.getUserByUsername(username)
-    if (!user) {
+    const user = await listaDeUsuarios.getUserByUsername(username, 'login')
+    console.log('user es:', user)
+    if (!user.username) {
         return done(null, false, { message: 'Usuario no existe' })
     }
     if (user.password !== password) {

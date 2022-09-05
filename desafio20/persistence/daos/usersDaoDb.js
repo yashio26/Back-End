@@ -2,6 +2,7 @@ import mongoose from "mongoose"
 import * as models from "../../models/usuarios.js"
 import { createTransport } from "nodemailer"
 import { returnUserDto } from "../dto/userDto.js"
+import { returnUserLoginDto } from "../dto/userLoginDto.js"
 
 const mail = 'yashio200007@gmail.com'
 const contrasenia = 'vxiyfmfxfugroikb'
@@ -52,10 +53,15 @@ class ContainerUsers{
         }
     }
 
-    async getUserByUsername(username){
+    async getUserByUsername(username, login){
         try{
-            const usuario = await models.usuarios.findOne({username: username})
-            return (usuario)
+            if (login === 'login'){
+                const usuario = await models.usuarios.findOne({username: username})
+                return returnUserLoginDto(usuario)
+            } else {
+                const usuario = await models.usuarios.findOne({username: username})
+                return returnUserDto(usuario)
+            }
         }
         catch(error){
             throw new Error (error)
@@ -78,7 +84,7 @@ class ContainerUsers{
         try{
             const usuarios = await models.usuarios.find()
             console.log('Todos los usuarios encontrados en contenedor')
-            return (usuarios)
+            return returnUserDto(usuarios)
         }
         catch(error){
             throw new Error (error)

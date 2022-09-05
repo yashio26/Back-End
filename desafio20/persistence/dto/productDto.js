@@ -1,4 +1,4 @@
-export default class ProductoDTO {
+export default class ProductDTO {
     constructor({ id, name, price, thumbnail }) {
         this.id = id
         this.name = name
@@ -9,8 +9,8 @@ export default class ProductoDTO {
 
 export function returnProductDto(products) {
     if (Array.isArray(products)) {
-        return products.map(product => new ProductoDTO(product))
+        return products.map(product => new ProductDTO(product))
     } else {
-        return new ProductoDTO(products)
+        return new ProductDTO(products)
     }
 }

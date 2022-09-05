@@ -1,4 +1,5 @@
 import fs from 'fs'
+import { returnMessageDto } from '../dto/messageDto.js'
 
 class ContenedorMensajes{
     constructor(){
@@ -28,7 +29,7 @@ class ContenedorMensajes{
         try{
             const mensajeObtenido = await fs.promises.readFile('./chat.json', 'utf-8')
             console.log('entrando a getmsg')
-            return JSON.parse(mensajeObtenido)
+            return returnMessageDto(JSON.parse(mensajeObtenido))
         }
         catch(error){
             throw new Error(error)

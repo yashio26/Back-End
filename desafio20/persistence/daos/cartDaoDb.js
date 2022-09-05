@@ -1,5 +1,7 @@
 import mongoose from 'mongoose'
 import * as models from '../../models/carrito.js'
+import { returnCartDto } from '../dto/cartDto.js'
+
 
 class ContenedorCarritoMongo{
     constructor(){
@@ -26,9 +28,10 @@ class ContenedorCarritoMongo{
     async getCartByUserId(idUsuario){
         let carritoEncontrado = await models.carrito.findOne({idUsuario: idUsuario})
         return (carritoEncontrado)
+        //return returnCartDto(carritoEncontrado)
     }
 
-    async getAll(){
+/*     async getAll(){
         try{
             const usuarios = await models.carrito.find()
             console.log(usuarios)
@@ -37,9 +40,9 @@ class ContenedorCarritoMongo{
         catch(error){
             throw new Error (error)
         }
-    }
+    } */
 
-    async testDeCarrito(idUsuario){
+/*     async testDeCarrito(idUsuario){
         try{
             const carrito = await models.carrito.findOne({idUsuario: idUsuario})
             console.log('carrito con idUsuario ' + idUsuario + ' es: ' + carrito)
@@ -47,9 +50,9 @@ class ContenedorCarritoMongo{
         catch(error){
             throw new Error (error)
         }
-    }
+    } */
 
-    async deleteCartById(numeroId){
+/*     async deleteCartById(numeroId){
         try{
             let carritoEliminado = await models.carrito.findOneAndDelete({_id: numeroId})
             console.log(carritoEliminado)
@@ -58,14 +61,14 @@ class ContenedorCarritoMongo{
         catch(error){
             throw new Error(error)
         }
-    }
+    } */
 
     async saveProductInCart(idUsuario, obj){
         try{
             /* let objParseado = JSON.parse(obj) */
             let carritoEncontrado = await models.carrito.findOneAndUpdate({idUsuario: idUsuario}, {$push: {productos: obj}}, {new: true})
             console.log('carrito encontrado en contenedor es: ' + carritoEncontrado)
-            return (`Se agregó el producto n° ${obj.id} al carrito n° ${idUsuario}`)
+            return (`Se agregó el producto n° ${obj.id}`)
         }
         catch (error){
             throw new Error(error)
@@ -76,7 +79,7 @@ class ContenedorCarritoMongo{
         try{
             let carritoEncontrado = await models.carrito.findByIdAndDelete({_id: idCarrito}, {$pull: {productos: {_id: idProducto}}})
             console.log(carritoEncontrado)
-            return (`Se eliminó el producto n° ${idProducto} del carrito ${idCarrito}`)
+            return (`Se eliminó el producto n° ${idProducto}`)
         }
         catch (error){
             throw new Error(error)
