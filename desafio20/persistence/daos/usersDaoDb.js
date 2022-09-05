@@ -1,6 +1,7 @@
 import mongoose from "mongoose"
 import * as models from "../../models/usuarios.js"
 import { createTransport } from "nodemailer"
+import { returnUserDto } from "../dto/userDto.js"
 
 const mail = 'yashio200007@gmail.com'
 const contrasenia = 'vxiyfmfxfugroikb'

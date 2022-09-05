@@ -1,6 +1,7 @@
 import admin from 'firebase-admin';
 import fs from 'fs';
 import generarProducto from '../../utils/generadorDeProductos.js';
+import { returnProductDto } from '../dto/productDto.js';
 
 const serviceAccount = JSON.parse(fs.readFileSync("./prodDB/desafio11-2970b-firebase-adminsdk-833dr-11cba7c705.json"));
 
@@ -35,7 +36,7 @@ class ContenedorProductos {
         try{
             let doc = await this.query.doc()
             await doc.create(articulos)
-            return (`Se agregó: ${articulos}`)
+            return (`Se agregó: ${returnProductDto(articulos)}`)
         }
         catch(error){
             throw new Error (error)
@@ -45,7 +46,8 @@ class ContenedorProductos {
     async getProdById(id) {
         try{
             let prodEncontrado = await this.query.doc(id).get()
-            return prodEncontrado.data()
+            console.log(prodEncontrado.data())
+            return returnProductDto(prodEncontrado.data())
         }
         catch(error){
             throw new Error (error)
@@ -62,7 +64,7 @@ class ContenedorProductos {
                 price: doc.data().price,
                 thumbnail: doc.data().thumbnail
             }))
-            return response
+            return returnProductDto(response)
         }
         catch(error){
             throw new Error(error)
