@@ -43,6 +43,16 @@ class ContenedorProductos {
         }
     }
 
+    async saveProdById(articulos) {
+        try{
+            let doc = await this.query.doc('productoAgregado').set(articulos)
+            return (`Se agregó: ${returnProductDto(articulos)}`)
+        }
+        catch(error){
+            throw new Error (error)
+        }
+    }
+
     async getProdById(id) {
         try{
             let prodEncontrado = await this.query.doc(id).get()
@@ -68,6 +78,17 @@ class ContenedorProductos {
         }
         catch(error){
             throw new Error(error)
+        }
+    }
+
+    async deleteProdById(id) {
+        try{
+            let prodEncontrado = await this.query.doc(id).delete()
+            console.log(prodEncontrado.data())
+            return returnProductDto(prodEncontrado.data())
+        }
+        catch(error){
+            throw new Error (error)
         }
     }
 };
