@@ -17,6 +17,9 @@ import ContenedorProductos from './persistence/daos/productsDaoDb.js'
 const listaDeProductos = new ContenedorProductos;
 import rutasUrl from './routes/routes.js'
 import dotenv from 'dotenv/config'
+import controllerGraph from './graphql/controller.js'
+/* const graphqlController = new GraphQLController */
+import { graphqlHTTP } from 'express-graphql'
 
 const PORT = process.env.PORT || 8080
 
@@ -39,6 +42,7 @@ app.use(session({
 app.use(express.json())
 app.use(express.urlencoded({ extended: false}))
 app.use('/', rutasUrl)
+app.use('/graphql', graphqlHTTP(controllerGraph))
 
 /* SOCKET */
 
