@@ -4,7 +4,7 @@ import { createTransport } from "nodemailer"
 import twilio from "twilio"
 
 const accountSid = 'AC60b52ea091809833fd750ba8d98d976f'
-const authToken = '123' //El token se encuentra en el readme
+const authToken = '65b9b8714d814b148ee2e1ee0a5549e4' //El token se encuentra en el readme
 
 const client = twilio(accountSid, authToken)
 
@@ -24,11 +24,9 @@ const mailOptions = (nuevaCompra) => ({
     from: mail,
     to: mail,
     subject: '¡Se realizó una compra en DBDStore!',
-    text: `Se ha registrado una nueva compra en DBDStore. Sus datos son:
-    Productos: ${nuevaCompra.productos}
+    text: `Se ha registrado una nueva compra en DBDStore, con el timestamp ${nuevaCompra.timestamp}. Los datos del cliente son:
     Comprador: ${nuevaCompra.comprador}
-    Telefono: ${nuevaCompra.comprador.phone}
-    Timestamp: ${nuevaCompra.timestamp}`
+    Productos: ${nuevaCompra.productos}`
 })
 
 class ContenedorCompra{
@@ -49,10 +47,9 @@ class ContenedorCompra{
             const nuevaCompra = await models.compra.create(newObj)
             const enviarMail = await transporter.sendMail(mailOptions(nuevaCompra))
             const enviarSMS = await client.messages.create({
-                body: `Se ha registrado una nueva compra en DBDStore. Sus datos son:
-                Productos: ${nuevaCompra.productos}
+                body: `Se ha registrado una nueva compra en DBDStore, con el timestamp ${nuevaCompra.timestamp}. Los datos del cliente son:
                 Comprador: ${nuevaCompra.comprador}
-                Telefono: ${nuevaCompra.comprador.phone}`,
+                Productos: ${nuevaCompra.productos}`,
                 from: `whatsapp:+14155238886`,
                 to: `whatsapp:+5491136342495`
             })
