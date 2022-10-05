@@ -21,21 +21,23 @@
             <% } else { %>
             <h1>Hay <%= productos.length %> productos en el carrito</h1>
             <div>
-                <% productos.map(producto => { %>
                 <div>
                     <h3>Nombre</h3>
+                    <% productos.forEach(function(producto){ %>
                     <p><%= producto.name %></p>
+                    <% }); %>
                 </div>
                 <div>
                     <h3>Precio</h3>
+                    <% productos.forEach(function(producto){ %>
                     <p><%= producto.price %></p>
+                    <% }); %>
                 </div>
-                <% }) %>
             </div>
             <form action="/comprar/<%= idCarrito %>" method="post">
                 <input type="submit" value="Comprar" class="btn btn-primary">
             </form>
-            <% } %>
+            <% }; %>
             <a href="/" class="btn btn-primary">Volver al inicio</a>
         </div>
     </div>

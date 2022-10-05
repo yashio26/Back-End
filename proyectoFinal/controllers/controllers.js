@@ -65,7 +65,6 @@ async function getLogout(req, res) {
 async function getCart(req, res) {
     const informacion = await listaDeUsuarios.getUserByUsername(req.session.passport.user)
     const carrito = await productosEnCarrito.getCartByUserId(informacion.id)
-    console.log('Los productos en carrito son: ', carrito.productos)
     res.render('carrito.ejs', { productos: carrito.productos,  idCarrito: carrito.idUsuario })
 }
 
@@ -76,7 +75,11 @@ async function postProductToCart(req, res) {
     const informacion = await listaDeUsuarios.getUserByUsername(req.session.passport.user)
     const productoParaAgregarACarrito = await listaDeProductos.getById(idProducto)
     console.log('productoParaAgregarACarrito es ', productoParaAgregarACarrito)
-    const carritoActualizado = await productosEnCarrito.saveProductInCart(informacion.id, JSON.stringify(productoParaAgregarACarrito, null, 2))
+    const carritoActualizado = await productosEnCarrito.saveProductInCart(informacion.id, {
+        name: productoParaAgregarACarrito.name, 
+        price: productoParaAgregarACarrito.price, 
+        thumbnail: productoParaAgregarACarrito.thumbnail
+    })
     res.redirect('/carrito')
 }
 
