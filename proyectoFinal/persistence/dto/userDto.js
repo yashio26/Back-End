@@ -1,11 +1,12 @@
 export default class UserDTO {
-    constructor({ id, username, email, name, address, phone }) {
+    constructor({ id, username, email, name, address, phone, avatar }) {
         this.id = id
         this.username = username
         this.email = email
         this.name = name
         this.address = address
         this.phone = phone
+        this.avatar = avatar
     }
 }
 

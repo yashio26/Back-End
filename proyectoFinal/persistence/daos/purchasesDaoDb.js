@@ -44,7 +44,6 @@ class ContenedorCompra{
         try{
             let timestamp = Date.now()
             const newObj = {productos: productosAComprar, comprador: datosComprador, timestamp: timestamp};
-            console.log(newObj)
             const nuevaCompra = await models.compra.create(newObj)
             const enviarMail = await transporter.sendMail(mailOptions(nuevaCompra))
             const enviarSMS = await client.messages.create({
@@ -54,8 +53,7 @@ class ContenedorCompra{
                 from: `whatsapp:+14155238886`,
                 to: `whatsapp:+5491136342495`
             })
-            console.log("Compra registrada", enviarSMS)
-            return ('Compra creada con la orden número ' + nuevaCompra._id)
+            return ('Compra creada con la orden número ' + nuevaCompra.id)
         }catch(error){
             throw new Error (error)
         }

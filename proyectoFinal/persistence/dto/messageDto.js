@@ -10,10 +10,8 @@ export default class MessageDTO {
 
 export function returnMessageDto(messages) {
     if (Array.isArray(messages)) {
-        console.log('es array!')
         return messages.map(message => new MessageDTO(message))
     } else {
-        console.log('no es array!')
         return new MessageDTO(messages)
     }
 }

@@ -47,6 +47,7 @@ async function getHome(req, res) {
 
 async function getPersonalData(req, res) {
     const informacion = await listaDeUsuarios.getUserByUsername(req.session.passport.user)
+    const vaciarCarrito = await productosEnCarrito.deleteProductsInCart(informacion.id)
     res.render('datosPersonales.ejs', { informacion })
 }
 
@@ -98,11 +99,9 @@ async function deleteProductInCart(req, res) {
 async function postBuy(req, res) {
     const idCarrito = req.params.idCarrito
     const productosAComprar = await productosEnCarrito.getCartByUserId(idCarrito)
-    console.log('productosAComprar es', productosAComprar)
     const datosComprador = await listaDeUsuarios.getUserByUsername(req.session.passport.user)
-    console.log('datosComprador es', datosComprador)
     const productoComprado = await listaDeCompras.saveCompra(JSON.stringify(productosAComprar.productos, null, 2), JSON.stringify(datosComprador, null, 2))
-    console.log('productoComprado es', productoComprado)
+    const vaciarCarrito = await productosEnCarrito.deleteProductsInCart(datosComprador.id)
     res.redirect('/')
 }
 

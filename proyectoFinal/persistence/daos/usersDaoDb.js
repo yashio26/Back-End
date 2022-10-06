@@ -26,7 +26,8 @@ const mailOptions = (user) => ({
     Nombre: ${user.name}
     Dirección: ${user.address}
     Edad: ${user.age}
-    Teléfono: ${user.phone}`
+    Teléfono: ${user.phone}
+    Avatar: ${user.avatar}`
 })
 
 class ContainerUsers{
@@ -43,10 +44,9 @@ class ContainerUsers{
         try{
             await models.usuarios.create(user)
             const enviarMail = await transporter.sendMail(mailOptions(user))
-            console.log(enviarMail)
             const idUsuario = await this.getUserByUsername(user.username)
-            console.log('idUsuario', idUsuario)
-            return (idUsuario._id)
+            console.log('idUsuario', idUsuario.id)
+            return (idUsuario.id)
         }
         catch(error){
             throw new Error(error)
@@ -60,7 +60,11 @@ class ContainerUsers{
                 return returnUserLoginDto(usuario)
             } else {
                 const usuario = await models.usuarios.findOne({username: username})
-                return returnUserDto(usuario)
+                if (!usuario) {
+                    return usuario
+                } else {
+                    return returnUserDto(usuario)
+                }
             }
         }
         catch(error){
