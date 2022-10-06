@@ -17,6 +17,7 @@ import ContenedorProductos from './persistence/daos/productsDaoDb.js'
 const listaDeProductos = new ContenedorProductos;
 import rutasUrl from './routes/routes.js'
 import dotenv from 'dotenv/config'
+import methodOverride from 'method-override'
 
 const PORT = process.env.PORT || 8080
 
@@ -27,6 +28,7 @@ const MongoStore = connectMongo.create({
     ttl: 600
 })
 
+app.use(methodOverride('_method'))
 app.use(express.static('./public'))
 app.set('view engine', 'ejs')
 app.use(cookieParser())

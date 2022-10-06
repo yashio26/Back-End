@@ -76,10 +76,20 @@ async function postProductToCart(req, res) {
     const productoParaAgregarACarrito = await listaDeProductos.getById(idProducto)
     console.log('productoParaAgregarACarrito es ', productoParaAgregarACarrito)
     const carritoActualizado = await productosEnCarrito.saveProductInCart(informacion.id, {
+        id: productoParaAgregarACarrito.id,
         name: productoParaAgregarACarrito.name, 
         price: productoParaAgregarACarrito.price, 
         thumbnail: productoParaAgregarACarrito.thumbnail
     })
+    res.redirect('/carrito')
+}
+
+/* ELIMINAR PRODUCTO EN CARRITO */
+
+async function deleteProductInCart(req, res) {
+    const idProducto = req.params.idProductoEnCarrito
+    const informacion = await listaDeUsuarios.getUserByUsername(req.session.passport.user)
+    const eliminarProducto = productosEnCarrito.deleteProductInCartById(informacion.id, idProducto)
     res.redirect('/carrito')
 }
 
@@ -96,4 +106,4 @@ async function postBuy(req, res) {
     res.redirect('/')
 }
 
-export default { getRegister, errorRegister, getLogin, errorLogin, getHome, getPersonalData, getLogout, getCart, postProductToCart, postBuy }
+export default { getRegister, errorRegister, getLogin, errorLogin, getHome, getPersonalData, getLogout, getCart, postProductToCart, deleteProductInCart, postBuy }

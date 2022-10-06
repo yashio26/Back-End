@@ -99,4 +99,6 @@ rutasUrl.post('/agregar/:idProducto', isAuth, controllers.postProductToCart)
 
 rutasUrl.post('/comprar/:idCarrito', isAuth, controllers.postBuy)
 
+rutasUrl.delete('/eliminar/:idProductoEnCarrito', isAuth, controllers.deleteProductInCart)
+
 export default rutasUrl;

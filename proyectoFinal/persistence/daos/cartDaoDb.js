@@ -77,7 +77,7 @@ class ContenedorCarritoMongo{
 
     async deleteProductInCartById(idCarrito, idProducto){
         try{
-            let carritoEncontrado = await models.carrito.findByIdAndDelete({_id: idCarrito}, {$pull: {productos: {_id: idProducto}}})
+            let carritoEncontrado = await models.carrito.findOneAndUpdate({idUsuario: idCarrito}, {$pull: {productos: {id: idProducto}}})
             console.log(carritoEncontrado)
             return (`Se eliminó el producto n° ${idProducto}`)
         }
