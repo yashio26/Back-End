@@ -2,9 +2,10 @@ import mongoose from "mongoose";
 import * as models from "../../models/compra.js"
 import { createTransport } from "nodemailer"
 import twilio from "twilio"
+import dotenv from 'dotenv/config'
 
-const accountSid = 'AC60b52ea091809833fd750ba8d98d976f'
-const authToken = '65b9b8714d814b148ee2e1ee0a5549e4' //El token se encuentra en el readme
+const accountSid = process.env.ACCOUNT_SID_TWILIO
+const authToken = process.env.AUTH_TOKEN_TWILIO //El token se encuentra en el readme
 
 const client = twilio(accountSid, authToken)
 
