@@ -1,11 +1,12 @@
 import mongoose from 'mongoose'
 import * as models from '../../models/carrito.js'
 import { returnCartDto } from '../dto/cartDto.js'
+import dotenv from 'dotenv/config'
 
 
 class ContenedorCarritoMongo{
     constructor(){
-        this.URL = "mongodb+srv://coderhouse:coderhouse@cluster0.xhcwo.mongodb.net/carrito?retryWrites=true&w=majority"
+        this.URL = process.env.MONGO_CART
         let conexion = mongoose.createConnection(this.URL, {
             useNewUrlParser: true,
             useUnifiedTopology: true,

@@ -3,6 +3,7 @@ import * as models from "../../models/usuarios.js"
 import { createTransport } from "nodemailer"
 import { returnUserDto } from "../dto/userDto.js"
 import { returnUserLoginDto } from "../dto/userLoginDto.js"
+import dotenv from 'dotenv/config'
 
 const mail = 'yashio200007@gmail.com'
 const contrasenia = 'vxiyfmfxfugroikb'
@@ -32,7 +33,7 @@ const mailOptions = (user) => ({
 
 class ContainerUsers{
     constructor(){
-        this.URL = 'mongodb://coderhouse:coderhouse@cluster0-shard-00-00.xhcwo.mongodb.net:27017,cluster0-shard-00-01.xhcwo.mongodb.net:27017,cluster0-shard-00-02.xhcwo.mongodb.net:27017/usuarios?ssl=true&replicaSet=atlas-4fo5qj-shard-0&authSource=admin&retryWrites=true&w=majority'
+        this.URL = process.env.MONGO_USER
         let conexion = mongoose.connect(this.URL, {
             useNewUrlParser: true,
             useUnifiedTopology: true,

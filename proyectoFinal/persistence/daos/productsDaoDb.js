@@ -2,8 +2,21 @@ import admin from 'firebase-admin';
 import fs from 'fs';
 import generarProducto from '../../utils/generadorDeProductos.js';
 import { returnProductDto } from '../dto/productDto.js';
+import dotenv from 'dotenv/config'
+const { privateKey } = JSON.parse(process.env.PRIVATE_KEY)
 
-const serviceAccount = JSON.parse(fs.readFileSync("./prodDB/desafio11-2970b-firebase-adminsdk-833dr-11cba7c705.json"));
+const serviceAccount = {
+    type: 'service_account',
+    project_id: process.env.PROJECT_ID,
+    private_key_id: process.env.PRIVATE_KEY_ID,
+    privateKey,
+    client_email: process.env.CLIENT_EMAIL,
+    client_id: process.env.CLIENT_ID,
+    auth_uri: process.env.AUTH_URI,
+    token_uri: process.env.TOKEN_URI,
+    auth_provider_x509_cert_url: process.env.AUTH_PROVIDER_X509_CERT_URL,
+    client_x509_cert_url: process.env.CLIENT_X509_CERT_URL
+}
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)

@@ -32,7 +32,7 @@ const mailOptions = (nuevaCompra) => ({
 
 class ContenedorCompra{
     constructor(){
-        this.URL = "mongodb+srv://coderhouse:coderhouse@cluster0.xhcwo.mongodb.net/compras?retryWrites=true&w=majority"
+        this.URL = process.env.MONGO_PURCHASE
         let conexion = mongoose.createConnection(this.URL, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
