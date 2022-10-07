@@ -95,6 +95,8 @@ rutasUrl.get('/sesioncerrada', controllers.getLogout)
 
 rutasUrl.get('/carrito', isAuth, controllers.getCart)
 
+rutasUrl.get('/compra-finalizada', isAuth, controllers.purchaseComplete)
+
 rutasUrl.post('/agregar/:idProducto', isAuth, controllers.postProductToCart)
 
 rutasUrl.post('/comprar/:idCarrito', isAuth, controllers.postBuy)

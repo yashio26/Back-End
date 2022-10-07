@@ -9,8 +9,8 @@ const authToken = process.env.AUTH_TOKEN_TWILIO //El token se encuentra en el re
 
 const client = twilio(accountSid, authToken)
 
-const mail = 'yashio200007@gmail.com'
-const contrasenia = 'vxiyfmfxfugroikb'
+const mail = process.env.MAIL
+const contrasenia = process.env.CONTRASENIA
 
 const transporter = createTransport({
     service: 'gmail',
@@ -25,7 +25,7 @@ const mailOptions = (nuevaCompra) => ({
     from: mail,
     to: mail,
     subject: '¡Se realizó una compra en DBDStore!',
-    text: `Se ha registrado una nueva compra en DBDStore, con el timestamp ${nuevaCompra.timestamp}. Los datos del cliente son:
+    text: `Se ha registrado una nueva compra en DBDStore, con el id ${nuevaCompra.id} y el timestamp ${nuevaCompra.timestamp}. Los datos del cliente son:
     Comprador: ${nuevaCompra.comprador}
     Productos: ${nuevaCompra.productos}`
 })
@@ -47,13 +47,13 @@ class ContenedorCompra{
             const nuevaCompra = await models.compra.create(newObj)
             const enviarMail = await transporter.sendMail(mailOptions(nuevaCompra))
             const enviarSMS = await client.messages.create({
-                body: `Se ha registrado una nueva compra en DBDStore, con el timestamp ${nuevaCompra.timestamp}. Los datos del cliente son:
+                body: `Se ha registrado una nueva compra en DBDStore, con el id ${nuevaCompra.id} y el timestamp ${nuevaCompra.timestamp}. Los datos del cliente son:
                 Comprador: ${nuevaCompra.comprador}
                 Productos: ${nuevaCompra.productos}`,
                 from: `whatsapp:+14155238886`,
-                to: `whatsapp:+5491136342495`
+                to: `whatsapp:${process.env.NUMERO_CELULAR}`
             })
-            return ('Compra creada con la orden número ' + nuevaCompra.id)
+            return 'Compra finalizada con exito'
         }catch(error){
             throw new Error (error)
         }

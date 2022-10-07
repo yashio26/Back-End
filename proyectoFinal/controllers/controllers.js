@@ -102,7 +102,11 @@ async function postBuy(req, res) {
     const datosComprador = await listaDeUsuarios.getUserByUsername(req.session.passport.user)
     const productoComprado = await listaDeCompras.saveCompra(JSON.stringify(productosAComprar.productos, null, 2), JSON.stringify(datosComprador, null, 2))
     const vaciarCarrito = await productosEnCarrito.deleteProductsInCart(datosComprador.id)
-    res.redirect('/')
+    res.redirect('/compra-finalizada')
 }
 
-export default { getRegister, errorRegister, getLogin, errorLogin, getHome, getPersonalData, getLogout, getCart, postProductToCart, deleteProductInCart, postBuy }
+async function purchaseComplete(req, res) {
+    res.render('compraFinalizada.ejs')
+}
+
+export default { getRegister, errorRegister, getLogin, errorLogin, getHome, getPersonalData, getLogout, getCart, postProductToCart, deleteProductInCart, postBuy, purchaseComplete }
