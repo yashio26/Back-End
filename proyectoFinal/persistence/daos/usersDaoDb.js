@@ -57,8 +57,13 @@ class ContainerUsers{
     async getUserByUsername(username, login){
         try{
             if (login === 'login'){
+                console.log('persistencia, username y login: ', username, login)
                 const usuario = await models.usuarios.findOne({username: username})
-                return returnUserLoginDto(usuario)
+                if (!usuario) {
+                    return usuario
+                } else {
+                    return returnUserLoginDto(usuario)
+                }
             } else {
                 const usuario = await models.usuarios.findOne({username: username})
                 if (!usuario) {
@@ -66,6 +71,20 @@ class ContainerUsers{
                 } else {
                     return returnUserDto(usuario)
                 }
+            }
+        }
+        catch(error){
+            throw new Error (error)
+        }
+    }
+
+    async getUserByEmail(email){
+        try{
+            const usuario = await models.usuarios.findOne({email: email})
+            if (!usuario) {
+                return usuario
+            } else {
+                return returnUserDto(usuario)
             }
         }
         catch(error){

@@ -8,12 +8,12 @@ import ContenedorCarrito from '../persistence/daos/cartDaoDb.js'
 const productosEnCarrito = new ContenedorCarrito;
 import bcrypt from 'bcryptjs'
 
-
 passport.use('register', new LocalStrategy({
     passReqToCallback: true
 }, async (req, username, password, done) => {
     const usuario = await listaDeUsuarios.getUserByUsername(username)
-    if (usuario) {
+    const email = await listaDeUsuarios.getUserByEmail(req.body.email)
+    if (usuario || email) {
         return done(null, false)
     }
     const passwordEncriptado = await bcrypt.hash(password, 10)
@@ -34,10 +34,12 @@ passport.use('register', new LocalStrategy({
     return done(null, user)
 }
 ))
+
 passport.use('login', new LocalStrategy( async (username, password, done) => {
+    console.log('username es: ', username)
     const user = await listaDeUsuarios.getUserByUsername(username, 'login')
     console.log('user es:', user)
-    if (!user.username) {
+    if (!user) {
         return done(null, false, { message: 'Usuario no existe' })
     }
     const passwordEncriptado = await bcrypt.compare(password, user.password)
