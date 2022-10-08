@@ -6,32 +6,33 @@ import ContainerUsers from '../persistence/daos/usersDaoDb.js'
 const listaDeUsuarios = new ContainerUsers;
 import ContenedorCarrito from '../persistence/daos/cartDaoDb.js'
 const productosEnCarrito = new ContenedorCarrito;
+import bcrypt from 'bcryptjs'
 
-const rutasUrl = Router()
 
 passport.use('register', new LocalStrategy({
     passReqToCallback: true
 }, async (req, username, password, done) => {
-        const usuario = await listaDeUsuarios.getUserByUsername(username)
-        if (usuario) {
-            return done(null, false)
-        }
-        const user = {
-            username,
-            password,
-            email: req.body.email,
-            name: req.body.name,
-            address: req.body.address,
-            age: req.body.age,
-            phone: req.body.phone,
-            avatar: req.body.avatar
-        }
-        const newUser = await listaDeUsuarios.saveUser(user)
-        console.log('newUser es', newUser)
-        productosEnCarrito.saveCarrito(newUser)
-        console.log('Usuario creado')
-        return done(null, user)
+    const usuario = await listaDeUsuarios.getUserByUsername(username)
+    if (usuario) {
+        return done(null, false)
     }
+    const passwordEncriptado = await bcrypt.hash(password, 10)
+    const user = {
+        username,
+        password: passwordEncriptado,
+        email: req.body.email,
+        name: req.body.name,
+        address: req.body.address,
+        age: req.body.age,
+        phone: req.body.phone,
+        avatar: req.body.avatar
+    }
+    const newUser = await listaDeUsuarios.saveUser(user)
+    console.log('newUser es', newUser)
+    productosEnCarrito.saveCarrito(newUser)
+    console.log('Usuario creado')
+    return done(null, user)
+}
 ))
 passport.use('login', new LocalStrategy( async (username, password, done) => {
     const user = await listaDeUsuarios.getUserByUsername(username, 'login')
@@ -39,7 +40,9 @@ passport.use('login', new LocalStrategy( async (username, password, done) => {
     if (!user.username) {
         return done(null, false, { message: 'Usuario no existe' })
     }
-    if (user.password !== password) {
+    const passwordEncriptado = await bcrypt.compare(password, user.password)
+    console.log('el resultado de la comparacion de contraseña es: ', passwordEncriptado)
+    if (!passwordEncriptado) {
         return done(null, false, { message: 'Contraseña incorrecta' })
     }
     console.log('Usuario autenticado')
@@ -56,6 +59,7 @@ passport.deserializeUser(function (username, done) {
 
 
 
+const rutasUrl = Router()
 rutasUrl.use(passport.initialize())
 rutasUrl.use(passport.session())
 

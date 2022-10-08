@@ -19,8 +19,6 @@ import rutasUrl from './routes/routes.js'
 import dotenv from 'dotenv/config'
 import methodOverride from 'method-override'
 
-const PORT = process.env.PORT || 8080
-
 const advancedOptions = {useNewUrlParser: true, useUnifiedTopology: true }
 const MongoStore = connectMongo.create({
     mongoUrl: process.env.MONGO_URL,
@@ -58,12 +56,12 @@ io.on('connection', async (sockets) => {
     })
 })
 
-/* FUNCTION DE SOCKET */
-
 async function listarMensajesNormalizados() {
     const mensajes = await historialDeMensajes.getMsg()
     const normalizados = normalizer({ id: 'mensajes', mensajes })
     return normalizados
 }
+
+const PORT = process.env.PORT || 8080
 
 httpServer.listen(PORT, () => console.log('Iniciando en el puerto: ' + PORT))

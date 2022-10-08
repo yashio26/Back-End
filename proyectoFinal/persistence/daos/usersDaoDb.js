@@ -5,8 +5,8 @@ import { returnUserDto } from "../dto/userDto.js"
 import { returnUserLoginDto } from "../dto/userLoginDto.js"
 import dotenv from 'dotenv/config'
 
-const mail = 'yashio200007@gmail.com'
-const contrasenia = 'vxiyfmfxfugroikb'
+const mail = process.env.MAIL
+const contrasenia = process.env.CONTRASENIA
 
 const transporter = createTransport({
     service: 'gmail',

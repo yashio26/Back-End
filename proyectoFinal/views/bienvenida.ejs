@@ -16,16 +16,14 @@
 <body>
     <div class="divHome">
         <div>
-            <h1>Bienvenido <%= username %>!</h1>
+            <h1>DBDStore</h1>
         </div>
         <div class="jumbotron">
             <a href="/sesioncerrada">Cerrar Sesión</a>
         </div>
         <div class="jumbotron">
-            <a href="/datos-personales">Datos personales</a>
-        </div>
-        <div class="jumbotron">
-            <img src="<%= avatar %>">
+            <a href="/datos-personales"><%= username %></a>
+            <img src="<%= avatar %>" height="44vh" width="44vw">
         </div>
         <% if (carrito.length > 0) { %>
         <div class="jumbotron">
