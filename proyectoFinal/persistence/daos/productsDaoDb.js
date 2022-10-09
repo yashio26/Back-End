@@ -85,6 +85,16 @@ class ContenedorProductos {
             throw new Error(error)
         }
     }
+
+    async deleteProduct(id) {
+        try{
+            const querySnapshot = await this.query.doc(id).delete()
+            return ('producto borrado')
+        }
+        catch (error){
+            throw new Error(error)
+        }
+    }
 };
 
 export default ContenedorProductos;

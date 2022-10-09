@@ -13,6 +13,13 @@ function addProduct(e) {
     return false
 }
 
+function deleteProduct(e) {
+    const product = document.getElementById("id").value
+    sockets.emit("delete-product", product);
+    document.getElementById("id").value = ""
+    return false
+}
+
 function render(data) {
     const html = data.map((elem, index) => {
         return(`

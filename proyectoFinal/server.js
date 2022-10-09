@@ -48,6 +48,10 @@ io.on('connection', async (sockets) => {
         await listaDeProductos.saveProd(data)
         io.sockets.emit('product', await listaDeProductos.getProds())
     })
+    sockets.on('delete-product', async data => {
+        await listaDeProductos.deleteProduct(data)
+        io.sockets.emit('product', await listaDeProductos.getProds())
+    })
     sockets.emit('mensajes', await listarMensajesNormalizados())
     const chat = await listarMensajesNormalizados()
     sockets.on('new-message', async dato => {

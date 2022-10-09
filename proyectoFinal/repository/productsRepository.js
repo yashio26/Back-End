@@ -25,12 +25,12 @@ export default class ProductsRepository {
         return nuevo
     } 
 
-    /* async deleteById(id) {
-        const removida = await this.dao.deleteById(id)
-        return new Product(removida)
+    async deleteById(id) {
+        const productoEliminado = await this.dao.deleteProduct(id)
+        return new Product(productoEliminado)
     }
 
-    async deleteAll() {
+    /* async deleteAll() {
         await this.dao.deleteAll()
     } */
 }

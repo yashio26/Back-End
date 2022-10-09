@@ -62,6 +62,13 @@ async function getLogout(req, res) {
     })
 }
 
+/* ELIMINAR PRODUCTO */
+
+async function deleteProduct(req, res) {
+    const idProducto = req.body.id
+    const productoEliminado = listaDeProductos.deleteById(idProducto)
+}
+
 /* CARRITO */
 
 async function getCart(req, res) {
@@ -110,4 +117,4 @@ async function purchaseComplete(req, res) {
     res.render('compraFinalizada.ejs')
 }
 
-export default { getRegister, errorRegister, getLogin, errorLogin, getHome, getPersonalData, getLogout, getCart, postProductToCart, deleteProductInCart, postBuy, purchaseComplete }
+export default { getRegister, errorRegister, getLogin, errorLogin, getHome, getPersonalData, getLogout, deleteProduct, getCart, postProductToCart, deleteProductInCart, postBuy, purchaseComplete }
