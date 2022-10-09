@@ -16,7 +16,7 @@ function render(data) {
         <tr>
         <td>${elem.name}</td>
         <td>$ ${elem.price}</td>
-        <td><img src="${elem.thumbnail}" height="40vh" width="40vw"></img></td>
+        <td><img src="${elem.thumbnail}" height="60vh" width="60vw"></img></td>
         <td>
             <form action="/agregar/${elem.id}" method="post">
                 <input type="submit" value="Agregar al carrito" class="btn btn-primary">
