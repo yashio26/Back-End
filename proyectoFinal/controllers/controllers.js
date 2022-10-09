@@ -1,7 +1,5 @@
 import ContainerUsers from '../persistence/daos/usersDaoDb.js'
 const listaDeUsuarios = new ContainerUsers;
-/* import ContenedorProductos from '../persistence/daos/productsDaoDb.js'
-const listaDeProductos = new ContenedorProductos; */
 import ProductsRepository from '../repository/productsRepository.js';
 const listaDeProductos = new ProductsRepository
 import ContenedorCarrito from '../persistence/daos/cartDaoDb.js'
@@ -40,7 +38,6 @@ async function errorLogin(req, res) {
 async function getHome(req, res) {
     const informacion = await listaDeUsuarios.getUserByUsername(req.session.passport.user)
     const carrito = await productosEnCarrito.getCartByUserId(informacion.id)
-    console.log('admin es: ', informacion.admin)
     res.render('bienvenida.ejs', { username: informacion.username, avatar: informacion.avatar, carrito: carrito.productos, admin: informacion.admin })
 }
 
@@ -83,7 +80,6 @@ async function postProductToCart(req, res) {
     const idProducto = req.params.idProducto
     const informacion = await listaDeUsuarios.getUserByUsername(req.session.passport.user)
     const productoParaAgregarACarrito = await listaDeProductos.getById(idProducto)
-    console.log('productoParaAgregarACarrito es ', productoParaAgregarACarrito)
     const carritoActualizado = await productosEnCarrito.saveProductInCart(informacion.id, {
         id: productoParaAgregarACarrito.id,
         name: productoParaAgregarACarrito.name, 

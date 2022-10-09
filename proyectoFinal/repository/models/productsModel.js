@@ -9,7 +9,6 @@ export default class Product {
         this.name = name
         this.price = price
         this.thumbnail = thumbnail
-        console.log('id Product essss: ', id)
     }
 
     get id() { return this.#id }

@@ -46,7 +46,6 @@ class ContainerUsers{
             await models.usuarios.create(user)
             const enviarMail = await transporter.sendMail(mailOptions(user))
             const idUsuario = await this.getUserByUsername(user.username)
-            console.log('idUsuario', idUsuario.id)
             return (idUsuario.id)
         }
         catch(error){
@@ -57,7 +56,6 @@ class ContainerUsers{
     async getUserByUsername(username, login){
         try{
             if (login === 'login'){
-                console.log('persistencia, username y login: ', username, login)
                 const usuario = await models.usuarios.findOne({username: username})
                 if (!usuario) {
                     return usuario
@@ -95,8 +93,6 @@ class ContainerUsers{
     async getIdOfUser(username){
         try{
             const usuario = await models.usuarios.findOne({username: username})
-            console.log('Usuario encontrado en contenedor: ', usuario)
-            console.log('idUsuario', usuario._id)
             return (usuario._id)
         }
         catch(error){
@@ -107,7 +103,6 @@ class ContainerUsers{
     async getAll(){
         try{
             const usuarios = await models.usuarios.find()
-            console.log('Todos los usuarios encontrados en contenedor')
             return returnUserDto(usuarios)
         }
         catch(error){
@@ -117,6 +112,3 @@ class ContainerUsers{
 }
 
 export default ContainerUsers
-
-/* const usuario = new ContainerUsers()
-console.log(usuario.getIdOfUser('pruebaParaCrearCarrito')) */

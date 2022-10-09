@@ -25,6 +25,7 @@
                     <tr>
                             <th>Nombre</th>
                             <th>Precio</th>
+                            <th>Foto</th>
                             <th>Quitar de la lista</th>
                     </tr>
                     <tbody>
@@ -32,10 +33,10 @@
                         <tr>
                         <td><%= producto.name %></td>
                         <td><%= producto.price %></td>
-                        <!-- <td><img src="${elem.thumbnail}" height="40vh" width="40vw"></img></td> -->
+                        <td><img src=<%= producto.thumbnail %> height="40vh" width="40vw"></img></td>
                         <td>
                             <form action="/eliminar/<%= producto.id %>?_method=DELETE" method="post">
-                                <input type="submit" value="eliminar" class="btn btn-primary">
+                                <input type="submit" value="Eliminar" class="btn btn-primary">
                             </form>
                         </td>
                         </tr>

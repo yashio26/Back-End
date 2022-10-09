@@ -1,5 +1,4 @@
 import { normalize, schema } from 'normalizr'
-// import print from './print.js'
 import util from 'util'
 
 function print(objeto) {
@@ -18,9 +17,6 @@ const chatSchema = new schema.Entity("mensajes", {
 
 function normalizer(obj) {
   let normalizado = normalize(obj, chatSchema)
-  console.log('entra a normalizer')
-  /* print(normalizado) */
-  console.log('fin normalizado')
   return normalizado
 }
 

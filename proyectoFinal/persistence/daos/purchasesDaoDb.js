@@ -5,7 +5,7 @@ import twilio from "twilio"
 import dotenv from 'dotenv/config'
 
 const accountSid = process.env.ACCOUNT_SID_TWILIO
-const authToken = process.env.AUTH_TOKEN_TWILIO //El token se encuentra en el readme
+const authToken = process.env.AUTH_TOKEN_TWILIO 
 
 const client = twilio(accountSid, authToken)
 

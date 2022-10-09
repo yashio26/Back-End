@@ -18,7 +18,6 @@ class ContenedorCarritoMongo{
         try{
             let timestamp = Date.now()
             const newObj = {idUsuario: idUsuario};
-            console.log(newObj)
             await models.carrito.create(newObj);
             return (idUsuario)
         }catch(error){
@@ -28,41 +27,8 @@ class ContenedorCarritoMongo{
 
     async getCartByUserId(idUsuario){
         let carritoEncontrado = await models.carrito.findOne({idUsuario: idUsuario})
-        return (carritoEncontrado)
-        //return returnCartDto(carritoEncontrado)
+        return returnCartDto(carritoEncontrado)
     }
-
-/*     async getAll(){
-        try{
-            const usuarios = await models.carrito.find()
-            console.log(usuarios)
-            return (usuarios)
-        }
-        catch(error){
-            throw new Error (error)
-        }
-    } */
-
-/*     async testDeCarrito(idUsuario){
-        try{
-            const carrito = await models.carrito.findOne({idUsuario: idUsuario})
-            console.log('carrito con idUsuario ' + idUsuario + ' es: ' + carrito)
-        }
-        catch(error){
-            throw new Error (error)
-        }
-    } */
-
-/*     async deleteCartById(numeroId){
-        try{
-            let carritoEliminado = await models.carrito.findOneAndDelete({_id: numeroId})
-            console.log(carritoEliminado)
-            return (carritoEliminado)
-        }
-        catch(error){
-            throw new Error(error)
-        }
-    } */
 
     async saveProductInCart(idUsuario, obj){
         try{
@@ -96,13 +62,3 @@ class ContenedorCarritoMongo{
 }
 
 export default ContenedorCarritoMongo
-
-//let carrito = new ContenedorCarritoMongo()
-
-//carrito.saveCarrito()
-//carrito.getAll()
-//carrito.getCartById('62b0d9f8cfd1314416ae440e')
-//carrito.deleteCartById('62b0db66746cb5cff251a0bd')
-//carrito.saveProductInCart('62b0d9f8cfd1314416ae440e', '5e8f8f8f8f8f8f8f8f8f8f8', { nombre: "zarina", descripcion: "personaje", codigo: "21", foto: "fto", precio: "$100", stock: "20", id: 2, timestamp: 1653441350588})
-//carrito.deleteProductInCartById('62b0d9f8cfd1314416ae440e', 1)
-//carrito.modifById('62aa630a2454ab547509e1d3', {nombre: "zarina", descripcion: "pj", codigo: "3", foto: "vb", precio: 10, stock: 100})

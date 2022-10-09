@@ -29,22 +29,17 @@ passport.use('register', new LocalStrategy({
         admin: false
     }
     const newUser = await listaDeUsuarios.saveUser(user)
-    console.log('newUser es', newUser)
     productosEnCarrito.saveCarrito(newUser)
-    console.log('Usuario creado')
     return done(null, user)
 }
 ))
 
 passport.use('login', new LocalStrategy( async (username, password, done) => {
-    console.log('username es: ', username)
     const user = await listaDeUsuarios.getUserByUsername(username, 'login')
-    console.log('user es:', user)
     if (!user) {
         return done(null, false, { message: 'Usuario no existe' })
     }
     const passwordEncriptado = await bcrypt.compare(password, user.password)
-    console.log('el resultado de la comparacion de contraseña es: ', passwordEncriptado)
     if (!passwordEncriptado) {
         return done(null, false, { message: 'Contraseña incorrecta' })
     }

@@ -1,6 +1,5 @@
 import admin from 'firebase-admin';
 import fs from 'fs';
-import generarProducto from '../../utils/generadorDeProductos.js';
 import { returnProductDto } from '../dto/productDto.js';
 import dotenv from 'dotenv/config'
 const { privateKey } = JSON.parse(process.env.PRIVATE_KEY)
@@ -28,21 +27,6 @@ class ContenedorProductos {
     constructor() {
         this.db = admin.firestore()
         this.query = this.db.collection('productos')
-        this.memory = []
-    }
-
-    async testingProducts(){
-        try{
-            for(let i = 0; i < 5; i++){
-                let fakeProd = generarProducto()
-                this.memory.push(fakeProd)
-            }
-            // console.log(this.memory)
-            return this.memory;
-        }
-        catch(error){
-            throw new Error(error)
-        }
     }
 
     async saveProd(articulos) {
@@ -59,9 +43,7 @@ class ContenedorProductos {
     async getProdById(id) {
         try{
             let prodEncontrado = await this.query.doc(id).get()
-            console.log('prod encontrado es: ', prodEncontrado.id, prodEncontrado.data())
             const response = {id: prodEncontrado.id, name: prodEncontrado.data().name, price: prodEncontrado.data().price, thumbnail: prodEncontrado.data().thumbnail}
-            console.log('response es: ', response)
             return returnProductDto(response)
         }
         catch(error){
@@ -98,7 +80,3 @@ class ContenedorProductos {
 };
 
 export default ContenedorProductos;
-
-/* const productoParaAgregarACarrito = new ContenedorProductos()
-
-console.log(await productoParaAgregarACarrito.getProdById('csufR5fDLrwsdSaZqhH8')) */

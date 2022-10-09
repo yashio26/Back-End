@@ -16,7 +16,6 @@ export default class ProductsRepository {
 
     async getById(id) {
         const persona = await this.dao.getProdById(id)
-        console.log('persona es: ', persona)
         return new Product(persona)
     }
 
@@ -29,8 +28,4 @@ export default class ProductsRepository {
         const productoEliminado = await this.dao.deleteProduct(id)
         return new Product(productoEliminado)
     }
-
-    /* async deleteAll() {
-        await this.dao.deleteAll()
-    } */
 }

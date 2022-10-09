@@ -18,7 +18,6 @@ class ContenedorMensajes{
         historial.push(newElem)
         try{
             await fs.promises.writeFile('./chat.json', JSON.stringify(historial, null, 2))
-            console.log('entrando a savemsj')
         }
         catch(error){
             throw new Error(error)
@@ -28,7 +27,6 @@ class ContenedorMensajes{
     async getMsg(){
         try{
             const mensajeObtenido = await fs.promises.readFile('./chat.json', 'utf-8')
-            console.log('entrando a getmsg')
             return returnMessageDto(JSON.parse(mensajeObtenido))
         }
         catch(error){

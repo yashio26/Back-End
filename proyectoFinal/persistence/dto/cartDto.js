@@ -1,6 +1,7 @@
 export default class CartDTO {
-    constructor({ products }) {
-        this.productos = products
+    constructor({ productos, idUsuario }) {
+        this.productos = productos
+        this.idUsuario = idUsuario
     }
 }
 
