@@ -30,6 +30,11 @@
             <a href="/carrito">Ver Carrito</a>
         </div>
         <% } %>
+        <% if (admin) { %>
+        <div class="jumbotron">
+            <%- include('./nuevoProducto.ejs') %> 
+        </div>
+        <% } %>
         <div class="jumbotron">
             <%- include('./prod.ejs')-%>
         </div>

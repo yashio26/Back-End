@@ -7,6 +7,9 @@ function addProduct(e) {
         thumbnail: document.getElementById("thumbnail").value
     }
     sockets.emit("new-product", product);
+    document.getElementById("name").value = ""
+    document.getElementById("price").value = ""
+    document.getElementById("thumbnail").value = ""
     return false
 }
 

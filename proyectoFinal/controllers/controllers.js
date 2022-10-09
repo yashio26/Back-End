@@ -40,7 +40,8 @@ async function errorLogin(req, res) {
 async function getHome(req, res) {
     const informacion = await listaDeUsuarios.getUserByUsername(req.session.passport.user)
     const carrito = await productosEnCarrito.getCartByUserId(informacion.id)
-    res.render('bienvenida.ejs', { username: informacion.username, avatar: informacion.avatar, carrito: carrito.productos })
+    console.log('admin es: ', informacion.admin)
+    res.render('bienvenida.ejs', { username: informacion.username, avatar: informacion.avatar, carrito: carrito.productos, admin: informacion.admin })
 }
 
 /* DATOS PERSONALES */

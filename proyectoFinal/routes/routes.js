@@ -25,7 +25,8 @@ passport.use('register', new LocalStrategy({
         address: req.body.address,
         age: req.body.age,
         phone: req.body.phone,
-        avatar: req.body.avatar
+        avatar: req.body.avatar,
+        admin: false
     }
     const newUser = await listaDeUsuarios.saveUser(user)
     console.log('newUser es', newUser)
