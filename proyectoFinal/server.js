@@ -11,8 +11,6 @@ import cookieParser from 'cookie-parser'
 import normalizer from './utils/normalizr.js'
 import ContenedorMensajes from './persistence/daos/messagesDaoFile.js'
 const historialDeMensajes = new ContenedorMensajes
-/* import MessagesRepository from './repository/messageRepository.js'
-const historialDeMensajes = new MessagesRepository; */
 import ContenedorProductos from './persistence/daos/productsDaoDb.js'
 const listaDeProductos = new ContenedorProductos;
 import rutasUrl from './routes/routes.js'
